@@ -447,7 +447,7 @@ public class SecureChestController implements Initializable{
                 if (response == removeButton) {
                     Dialog<ButtonType> dialog2 = new Dialog<>();
                     dialog2.setTitle("Remove Current User");
-                    dialog2.setHeaderText("Confirm to remove current user from accessing your secure chest?");
+                    dialog2.setHeaderText("Confirm to remove " + selectedUser.split(" ")[0] +" from accessing your secure chest?");
                     dialog2.getDialogPane().getStylesheets().add(cssFilePath);
                     dialog2.getDialogPane().getStyleClass().add("dialog-pane");
 
@@ -461,7 +461,7 @@ public class SecureChestController implements Initializable{
                     dialog2.showAndWait().ifPresent(response2->{
                         if (response2==confirm){
                             try {
-                                chest.removeAuthorisedUser(selectedUser);
+                                chest.removeAuthorisedUser(selectedUser.split(" ")[0]);
                             } catch (SQLException e1) {
                                 e1.printStackTrace();
                             }
@@ -512,7 +512,7 @@ public class SecureChestController implements Initializable{
                             switch (selectedPermission) {
                                 case "No Access":
                                     try {
-                                        chest.removeAuthorisedUser(selectedUser);
+                                        chest.removeAuthorisedUser(selectedUser.split(" ")[0]);
                                     } catch (SQLException e1) {
                                         e1.printStackTrace();
                                     }

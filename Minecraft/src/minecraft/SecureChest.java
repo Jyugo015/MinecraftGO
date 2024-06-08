@@ -104,7 +104,7 @@ public class SecureChest {
 
     // Get the list of players with access to the chest
     public List<String> getAuthorizedPlayers() {
-        return accessPermissions.keySet().stream().map(e -> String.format("%-70s", e) +
+        return accessPermissions.keySet().stream().map(e -> String.format("%-50s", e) +
         (this.getAccessPermissions().get(e) == 1 ? "View Only" : "Full Access")).collect(Collectors.toList());
     }
 
@@ -190,6 +190,7 @@ public class SecureChest {
     public void removeAuthorisedUser(String username) throws SQLException{
         database_item7.removeApprovedUser(owner,username);
         accessPermissions.remove(username);
+        accessPermissions.entrySet().stream().forEach(e->System.out.println(e.getKey()+ " " + e.getValue()));
     }
 
     // Method to approve access request

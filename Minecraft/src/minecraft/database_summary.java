@@ -18,7 +18,8 @@ public class database_summary {
     //each functionality
     public static void main(String[] args) throws SQLException {
         resetAll();
-        demonstrate();  
+
+        demonstrate();
     }
 
     public static void demonstrate() throws SQLException {

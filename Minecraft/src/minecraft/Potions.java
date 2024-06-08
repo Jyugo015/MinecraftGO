@@ -161,7 +161,7 @@ public class Potions {
         for(Map.Entry<String, Potion> entry : potionsMap.entrySet()){
             String potionName = entry.getKey();
             Potion potion = entry.getValue();
-            System.out.println(index + ". " + potionName + " - " + potion);
+            // System.out.println(index + ". " + potionName + " - " + potion);
             sortedPotionsMap.put(potionName, potion);
             index++;
         }

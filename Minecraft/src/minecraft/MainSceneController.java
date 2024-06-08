@@ -129,13 +129,15 @@ public class MainSceneController implements Initializable {
         Scene scene = new Scene(root);
         Stage stage = (Stage) btn.getScene().getWindow();
         stage.setScene(scene);
-        stage.setTitle("Potion Stachel");
+        stage.setTitle("Potion Satchel");
         scene.getStylesheets().add(getClass().getResource("minecraft-style.css").toExternalForm());
         stage.getIcons().clear();
         Image icon = new Image(getClass().getResourceAsStream("/minecraft/icon/Potion.png"));
         stage.getIcons().add(icon);
         stage.setOnCloseRequest(e->{
             try {
+                if (PotionSatchelController.backgroundThread != null && PotionSatchelController.backgroundThread.isAlive())
+                    PotionSatchelController.backgroundThread.interrupt();
                 System.out.println("In");
                 Parent root1 = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
                 Scene scene1 = new Scene(root1);

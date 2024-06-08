@@ -1,0 +1,408 @@
+/* button style */
+.button {
+    -fx-background-color: black;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0; /* No rounded corners */
+    -fx-border-color: transparent; /* No border */
+    -fx-border-width: 0;
+    -fx-padding: 5px 10px;
+    -fx-font-family: 'Unifont';
+    -fx-font-size: 14px;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    /* -fx-background-color: linear-gradient(#d2d2d2, #bfbfbf); */
+    -fx-background-color: #6c2929;
+    /* -fx-border-color: #6c2929; */
+}
+
+.button:pressed {
+    -fx-background-color: #6c2929;
+    /* -fx-border-color:#6c2929; */
+}
+
+.button-mainPage {
+    -fx-background-color: rgb(248, 239, 222);
+    -fx-background-insets: 0;
+    -fx-background-radius: 0; /* No rounded corners */
+    -fx-border-color: rgb(248, 239, 222) white white rgb(248, 239, 222); /* No border */
+    -fx-border-width: 2;
+    -fx-padding: 0px 0px;
+    -fx-font-family: 'Unifont';
+    -fx-font-size: 13px;
+    -fx-text-fill: black;
+}
+
+.button-mainPage:hover {
+    /* -fx-background-color: linear-gradient(#d2d2d2, #bfbfbf); */
+    -fx-background-color: #6c2929;
+    -fx-text-fill: white;
+    -fx-border-color: #6c2929 white white #6c2929; 
+    /* -fx-border-color: #6c2929; */
+}
+
+.button-mainPage:pressed {
+    -fx-background-color: #6c2929;
+    -fx-border-color: #6c2929 white white #6c2929; 
+    /* -fx-border-color:#6c2929; */
+    -fx-text-fill: white;
+
+}
+
+.button-removeenderbackpack{
+    -fx-background-color: rgb(26, 88, 59);
+    -fx-background-insets: 0;
+    -fx-background-radius: 0; /* No rounded corners */
+    -fx-border-color: transparent; /* No border */
+    -fx-border-width: 0;
+    -fx-padding: 0px 0px;
+    -fx-font-family: 'Unifont';
+    -fx-font-size: 8px;
+    -fx-text-fill: white;
+}
+
+.button-removeenderbackpack:hover {
+    /* -fx-background-color: linear-gradient(#d2d2d2, #bfbfbf); */
+    -fx-background-color: #6c2929;
+    /* -fx-border-color: rgb(17, 56, 77) white white rgb(17, 56, 77);  */
+    /* -fx-border-color: #6c2929; */
+}
+
+.button-removeenderbackpack:pressed {
+    -fx-background-color: #6c2929;
+    /* -fx-border-color: rgb(17, 56, 77) white white rgb(17, 56, 77);  */
+    /* -fx-border-color:#6c2929; */
+}
+
+/* listview */
+.list-view {
+    -fx-padding: 0px; /* Padding inside the ListView */
+    -fx-background-insets: 0px; /* Insets around the ListView */
+    -fx-background-color: #979797;
+    -fx-border-color: black white white black;
+    -fx-border-width: 2;
+}
+
+.list-view .list-cell {
+    -fx-text-fill: black;
+    -fx-font-size: 12px;
+    -fx-font-family: 'Unifont';
+    -fx-background-color: #979797;
+}
+
+.list-view .list-cell:hover {
+    -fx-background-color: rgb(116, 115, 115); /* Change background color on hover */
+}
+
+.list-view .list-cell:pressed, 
+.list-view .list-cell:selected, 
+.list-view .list-cell:focused {
+    -fx-background-color: #6c2929; /* Change background color when pressed, selected, or focused */
+    -fx-text-fill: white;
+}
+
+/* line */
+.line {
+    -fx-border-color: black; /* Default border color */
+    -fx-border-width: 1px; /* Default border width */
+}
+
+.line:hover {
+    -fx-border-color: #6c2929; /* Border color on hover */
+}
+
+.line:pressed {
+    -fx-border-color: #6c2929; /* Border color when pressed */
+}
+
+/* table view */
+/* Style for the entire TableView */
+.table-view {
+    -fx-background-color: white; /* Default background color */
+    -fx-font-size: 12px;
+    -fx-font-family: 'Unifont';
+    -fx-text-fill: white;
+}
+
+/* Style for individual row cells */
+.table-row-cell {
+    -fx-background-color: lightgray; /* Default row background color */
+}
+
+/* Style for row cells on hover */
+.table-row-cell:hover {
+    -fx-background-color: #6c2929; /* Row background color on hover */
+}
+
+.table-row-cell:hover .text {
+    -fx-fill: white; /* Change text color on hover for better visibility */
+}
+    
+    /* Style for row cells when pressed */
+.table-row-cell:pressed {
+    -fx-background-color: #6c2929; /* Row background color when pressed */
+}
+    
+.table-row-cell:pressed .text {
+    -fx-fill: white; /* Change text color when pressed for better visibility */
+}
+    
+/* Style for column headers */
+.table-column-header {
+    /* -fx-border-width: 1px;
+    -fx-border-color: black; */
+}
+
+.table-column-header .label {
+    -fx-text-fill: black; 
+    -fx-font-weight: bold; 
+    -fx-background-color: rgb(120, 118, 118);
+    -fx-padding:0;
+    /* -fx-border-color: black; /* Border color */
+    /* -fx-border-width: 1px; Border width  */
+} 
+
+/* Style for TableCell */
+.table-cell {
+    -fx-padding: 0px; /* Cell padding */
+    -fx-alignment: CENTER; /* Center-align the content within cells */
+}
+
+
+
+/* text  */
+.text-title{
+    -fx-font-size: 24px;
+    -fx-font-family: 'Unifont';
+    -fx-fill: #000000; /* Text color red */
+    -fx-font-weight: bold;
+}
+
+.text-subtitle {
+    -fx-font-size: 18px;
+    -fx-font-family: 'Unifont';
+    -fx-font-style: italic;
+    -fx-fill: #000000; 
+}
+
+.text-body {
+    -fx-font-size: 14px;
+    -fx-font-family: 'Unifont';
+    -fx-fill: #000000; 
+}
+
+.text-body-pressed{
+    -fx-font-size: 14px;
+    -fx-font-family: 'Unifont';
+    -fx-fill: white;
+}
+
+.text-custom {
+    -fx-font-size: 10px;
+    -fx-font-family: 'Unifont';
+    -fx-fill: #000000; 
+}
+.text-underlined {
+    -fx-font-size: 10px;
+    -fx-font-family: 'Unifont';
+    -fx-fill: #000000; 
+    -fx-underline: true;
+}
+
+.warningtext {
+    -fx-font-size: 10px;
+    -fx-font-family: 'Unifont';
+    -fx-fill: red;
+}
+
+.text-grid{
+    -fx-font-size: 12px;
+    -fx-font-family: 'Unifont';
+    -fx-text-fill: black;
+}
+
+.text-grid:hover {
+    -fx-font-size: 12px;
+    -fx-font-family: 'Unifont';
+    -fx-text-fill: white;
+}
+
+.text-yesno{
+    -fx-text-fill: black;
+}
+
+.yesnobutton:hover .text-yesno {
+    -fx-text-fill: white; /* Text color on hover */
+}
+
+.yesnobutton{
+    -fx-background-radius: 20px;
+    -fx-min-width: 40px;
+    -fx-max-width: 40px;
+    -fx-min-height: 40px;
+    -fx-max-height: 40px;
+    -fx-background-color: darkgray;
+}
+
+.yesnobutton:hover {
+    -fx-background-color: black;
+}
+
+/* box with no border, inset, padding */
+.button-inbox {
+    -fx-padding: 0; /* Sets padding on all sides to 10 pixels */
+    -fx-background-color: transparent; /* Optional: set background color */
+    -fx-border-color: transparent; /* Optional: set border color */
+    -fx-border-width: 0px; /* Optional: set border width */
+}
+
+.griditem {
+    -fx-background-insets: 0;
+    -fx-background-radius: 0; /* No rounded corners */
+    -fx-background-color: #979797;
+    -fx-border-color: black white white black;
+    -fx-border-width: 2;
+    -fx-padding: 10 10 10 10;
+}
+
+.griditem:hover {
+    /* -fx-background-color: linear-gradient(#d2d2d2, #bfbfbf); */
+    -fx-background-color: #6c2929;
+    /* -fx-border-color: #6c2929; */
+}
+
+.griditempressed {
+    -fx-background-insets: 0;
+    -fx-background-radius: 0; 
+    -fx-background-color: #6c2929;
+    -fx-border-color: black white white black;
+    -fx-border-width: 2;
+    -fx-padding: 10 10 10 10;
+}
+
+.label-in-griditem {
+    -fx-text-fill: black; /* Initial text color */
+    -fx-font-family: 'Unifont';
+    -fx-font-size: 14px;
+}
+
+.griditem:hover .label-in-griditem {
+    -fx-text-fill: white; /* Text color on hover */
+    -fx-font-family: 'Unifont';
+    -fx-font-size: 14px;
+}
+
+/* box with padding */
+.custom-box-insets {
+    -fx-padding: 10 20 30 40; /* Sets padding: top 10px, right 20px, bottom 30px, left 40px */
+    -fx-background-color: lightgreen; /* Optional: set background color */
+    -fx-border-color: black; /* Optional: set border color */
+    -fx-border-width: 1px; /* Optional: set border width */
+}
+
+/* dialogPane */
+.dialog-pane {
+    -fx-background-color: lightgray; 
+    -fx-font-size: 14px;
+    -fx-font-family: 'Unifont';
+    -fx-text-fill: #000000; 
+    -fx-padding: 10;
+}
+
+.dialog-pane .header-panel {
+    -fx-font-size: 14px;
+    -fx-font-family: 'Unifont';
+    -fx-font-weight: bold;
+}
+
+.dialog-pane .content {
+    -fx-font-size: 12px;
+    -fx-font-family: 'Unifont';
+    -fx-font-weight: normal;
+}
+
+.dialog-pane .button-bar {
+    -fx-font-size: 10px;
+    -fx-font-family: 'Unifont';
+    -fx-font-weight: bold;
+}
+
+.check-box {
+    -fx-font-family: 'Unifont';
+    -fx-font-size: 12px;
+    -fx-text-fill: black;
+}
+
+.check-box:selected {
+    -fx-mark-color: white; /* Color for the check mark */
+}
+
+.check-box:selected .box {
+    -fx-background-color: #6c2929; /* Border color when selected */
+    /* -fx-border-width: 2px; */
+}
+
+.check-box .box {
+    -fx-background-color: darkgray; /* Background color for the box */
+    -fx-border-color:black white white black; /* Border color */
+    -fx-border-width: 2px;
+}
+
+/* Style for MenuButton */
+.menu-button {
+    -fx-font-family: 'Unifont';
+    -fx-font-size: 12px;
+    -fx-background-color: rgb(198, 195, 195); 
+    -fx-text-fill: white;
+    -fx-border-color: black white white black; 
+    -fx-border-width: 1px;
+}
+
+.menu-button:hover {
+    -fx-background-color: #d3abab;
+    -fx-text-fill: white;
+}
+
+.menu-button:pressed {
+    -fx-background-color: #d3abab; 
+    -fx-text-fill: white;
+}
+
+.menu-item {
+    -fx-font-family: 'Unifont';
+    -fx-font-size: 12px;
+    -fx-background-color: grey;
+    -fx-text-fill: white;
+}
+
+.menu-item:hover {
+    -fx-background-color: #6c2929; /* Background color on hover */
+}
+
+.textfield{
+    -fx-background-insets: 0;
+    -fx-background-radius: 0; /* No rounded corners */
+    -fx-background-color: #979797;
+    -fx-border-color: black white white black;
+    -fx-border-width: 2;
+    -fx-padding: 10 10 10 10;
+    -fx-font-size: 14px;
+    -fx-font-family: 'Unifont';
+    -fx-text-fill: #000000; 
+}
+
+.textfield:hover {
+    -fx-background-color: darkgray; /* Background color on hover */
+    -fx-font-size: 14px;
+    -fx-font-family: 'Unifont';
+    -fx-text-fill: white; 
+}
+
+.textfield:pressed {
+    -fx-background-color: darkgray; /* Background color when pressed */
+    -fx-font-size: 14px;
+    -fx-font-family: 'Unifont';
+    -fx-text-fill: white; 
+}
+

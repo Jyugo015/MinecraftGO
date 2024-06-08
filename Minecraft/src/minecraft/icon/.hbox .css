@@ -1,0 +1,17 @@
+.hbox {
+    -fx-border-color: #ccc; 
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 10px;
+    -fx-background-color: #f8f8f8; 
+}
+
+.label {
+    -fx-font-size: 14px; 
+    -fx-padding: 4px;
+}
+
+.button {
+    -fx-background-color: #ff6347; 
+    -fx-text-fill: white;
+    -fx-padding: 4px 8px;
+}

@@ -115,6 +115,12 @@ public class AutoFarmerBlock {
     //after the addCrop button is clicked and all tasks are added into the queue, starts running the task 
     //one by one
     //complete one task, dequeue -> poll()
+    
+    /**
+     * Run
+     * @param controller
+     * @throws SQLException 
+     */
     public void runTask(AutofarmerblockController controller) throws SQLException {
         while (!taskManager.isEmpty()){
             Task taskToRun = taskManager.peek();

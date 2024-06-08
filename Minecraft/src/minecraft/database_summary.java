@@ -17,8 +17,8 @@ public class database_summary {
     //as for multiple user in secureChest and teleportation point, we use defaultUser2,3,4 respectively for 
     //each functionality
     public static void main(String[] args) throws SQLException {
+        resetAll();
         demonstrate();
-        // resetAll();
     }
 
     public static void demonstrate() throws SQLException {

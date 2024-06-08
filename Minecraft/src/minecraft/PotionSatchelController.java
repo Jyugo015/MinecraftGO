@@ -51,6 +51,8 @@ public class PotionSatchelController extends database_item3 implements Initializ
     @FXML
     private Button addButton;
     @FXML
+    private Button doneButton;
+    @FXML
     private Button usePotionButton;
     @FXML
     private Button removeButton;
@@ -72,8 +74,8 @@ public class PotionSatchelController extends database_item3 implements Initializ
     private Potion currentlySelectedPotion = null;
     
     private newPotionSatchel satchel = new newPotionSatchel();
-    private ArrayList<String> potionBag;
-    Thread backgroundThread;
+    public ArrayList<String> potionBag;
+    public static Thread backgroundThread;
 
     //each time removing or adding potion into satchel will change the list of potion
     //(remove potion from list of potion if adding potion to satchel)
@@ -101,7 +103,14 @@ public class PotionSatchelController extends database_item3 implements Initializ
         usePotionButton.setDisable(selectedPotions==null||selectedPotions.isEmpty());
         populatePotionGrid();
         updateSelectedPotionsGrid();
-        usePotionButton.setOnAction(e->startBackgroundThread());
+        usePotionButton.setOnAction(e->{
+            addButton.setDisable(true);
+            doneButton.setDisable(true);
+            removeButton.setDisable(true);
+            clearPotionButton.setDisable(true);
+            usePotionButton.setDisable(true);
+            startBackgroundThread();
+        });
     }
 
     private void startBackgroundThread(){
@@ -111,6 +120,11 @@ public class PotionSatchelController extends database_item3 implements Initializ
                 try {
                     for (int i=0;i<currentNum;i++)
                         satchel.useFirstPotionAutomatically(this);
+                    addButton.setDisable(false);
+                    doneButton.setDisable(false);
+                    removeButton.setDisable(false);
+                    clearPotionButton.setDisable(false);
+                    displayUsePotion();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -124,16 +138,17 @@ public class PotionSatchelController extends database_item3 implements Initializ
     }
 
     //printing list of potions can be chosen into potionsatchel
-    private void populatePotionGrid() {
+    public void populatePotionGrid() {
         potionGrid.setHgap(5);
         potionGrid.setVgap(5);
         // potionGrid.setPadding(new Insets(10, 10, 10, 10));
         int row = 0, col = 0;
+        buttonPotionMap.clear();
         for (Map.Entry<String, Potion> entry : potionMap.entrySet()) {
             Potion potion = entry.getValue();
             String fileName = "/minecraft/icon/" + potion.getName() + ".PNG";
-            System.out.println(fileName);
-            System.out.println(potion.getName());
+            // System.out.println(fileName);
+            // System.out.println(potion.getName());
             ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream(fileName)));
             imageView.setFitWidth(30);
             imageView.setFitHeight(30);
@@ -143,16 +158,20 @@ public class PotionSatchelController extends database_item3 implements Initializ
             button.setTooltip(new Tooltip(potion.getName() + "\nPotency: " + potion.getPotency() + "\nEffect: " + potion.getEffect()));
             button.setMaxSize(35,35);
             button.setPrefSize(35,35);
-            button.getStyleClass().add("griditem");
             buttonPotionMap.put(button, potion);
             
             boolean found = false;
             for (String potionName: potionBag){
-                if (potionName.equals(entry.getKey()))
-                found = true;
+                if (potionName.equals(entry.getKey())){
+                    found= true;
+                }
             }
-            if (!found)
+            if (!found){
                 button.setDisable(true);
+                button.getStyleClass().add("griditempressed");
+            }
+            else 
+                button.getStyleClass().add("griditem");
             button.setOnAction(e -> handlePotionSelection(button));
             //select the potion and save as reference  
             potionGrid.add(button, col++, row);
@@ -235,6 +254,8 @@ public class PotionSatchelController extends database_item3 implements Initializ
             int numToAdd = Integer.parseInt(number);
             if (numToAdd > 0 && (totalPotionsAdded + numToAdd <= MAX_POTIONS)) {
                 potionsToAdd = numToAdd;
+                System.out.println(String.valueOf(potionsToAdd));
+                tempSelectedPotions.clear();
             } else {
                 showAlert("Limit Reached", "Adding this amount would exceed the maximum number of potions.");
             }
@@ -247,8 +268,15 @@ public class PotionSatchelController extends database_item3 implements Initializ
         //!tempSelectedPotions.contains(buttonPotionMap.get(button), means tempselectedPotions does not contain
         //the potion that maps to the button, this is to avoid adding duplicate potion(of the same kind)
         if (tempSelectedPotions.size() < potionsToAdd && !tempSelectedPotions.contains(buttonPotionMap.get(button))) {
+            System.out.println("got selected");
             tempSelectedPotions.add(buttonPotionMap.get(button));
             button.setDisable(true);  // Disable the button immediately to prevent re-selection
+            System.out.println(button.isDisable());
+        }
+        else{
+            System.out.println("not selected");
+            if (tempSelectedPotions.size() >= potionsToAdd) System.out.println("potionsToAdd/tempSelectedPotions wrong");
+            if (tempSelectedPotions.contains(buttonPotionMap.get(button))) System.out.println("potionMap wrong");
         }
     }
 
@@ -262,6 +290,7 @@ public class PotionSatchelController extends database_item3 implements Initializ
         tempSelectedPotions.forEach(e->
         {
             satchel.addPotionToSatchel(e);
+            potionBag.remove(e.getName());
             try {
                 database_item3.addPotionSatchel("defaultUser", 
                                                 e.getName(),e.getPotency(), e.getEffect());
@@ -278,6 +307,7 @@ public class PotionSatchelController extends database_item3 implements Initializ
         totalPotionsAdded =satchel.getSize();
         // usePotionButton.setDisable(selectedPotions==null);
         updateSelectedPotionsGrid();
+        populatePotionGrid();
         tempSelectedPotions.clear();
         potionsToAdd = 0;  // Reset the count after adding potions
         displayUsePotion();
@@ -347,6 +377,7 @@ public class PotionSatchelController extends database_item3 implements Initializ
         if (potion != null) {
             selectedPotions.remove(potion);
             satchel.removePotion(potion);
+            potionBag.add(potion.getName());
             // selectedPotionMap.remove(currentlySelectedButton);
             database_item3.removePotionSatchel("defaultUser", potion.getName(), 
                                                 potion.getPotency(), potion.getEffect());
@@ -361,6 +392,7 @@ public class PotionSatchelController extends database_item3 implements Initializ
             selectedPotions.remove(currentlySelectedPotion);
             currentlySelectedPotion = null;
             updateSelectedPotionsGrid();
+            populatePotionGrid();
             displayUsePotion();
         }
     }
@@ -378,6 +410,7 @@ public class PotionSatchelController extends database_item3 implements Initializ
         if (!selectedPotions.isEmpty()||selectedPotions!=null){
             selectedPotions.forEach(potion-> {
                 try {
+                    potionBag.add(potion.getName());
                     database_itemBox.addItem("defaultUser", 
                                             potion.getName(), 1);
                     database_item3.addPotion("defaultUser", potion.getName(), 
@@ -398,22 +431,20 @@ public class PotionSatchelController extends database_item3 implements Initializ
 
     private void showAlert(String title, String content) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.getDialogPane().setStyle("-fx-background-color: lightgray; " + 
-                                                    "    -fx-font-size: 12px;" + 
-                                                    "    -fx-font-family: 'Unifont';" + 
-                                                    "    -fx-text-fill: #000000; " + 
-                                                    "    -fx-padding: 10;");
+        String cssFilePath = getClass().getResource("minecraft-style.css").toExternalForm();
+        alert.getDialogPane().getStylesheets().add(cssFilePath);
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
     }
 
-    private void resetPotionButtons() {
-        potionGrid.getChildren().forEach(node -> {
-            if (node instanceof Button) {
-                node.setDisable(false);
-            }
-        });
-    }
+    // private void resetPotionButtons() {
+    //     potionGrid.getChildren().forEach(node -> {
+    //         if (node instanceof Button) {
+    //             node.setDisable(false);
+    //         }
+    //     });
+    // }
 }

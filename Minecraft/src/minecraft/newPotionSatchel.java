@@ -194,13 +194,14 @@ public class newPotionSatchel extends Potions{
                     Thread.sleep(5000);
                     Platform.runLater(() -> {
                         try {
+                            controller.potionBag.remove(satchel.getHead().getName());
                             selectedPotions.stream().filter(e->satchel.getHead().getName().equals(e.getName()))
                                                     .findFirst().ifPresent(e->selectedPotions.remove(e));
                             satchel.head = satchel.head.nextPotion;
                             satchel.size--;
                             controller.setTotalPotionsAdded(satchel.getSize());
                             controller.updateSelectedPotionsGrid();
-                            controller.displayUsePotion();
+                            controller.populatePotionGrid();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

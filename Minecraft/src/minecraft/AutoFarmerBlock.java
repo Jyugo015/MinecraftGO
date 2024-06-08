@@ -30,6 +30,13 @@ public class AutoFarmerBlock {
 
     //when addCrop button is clicked, add task into the queue.
     //if resources needed is insufficient, print out suitable message
+    /**
+     * Add the selected crop and check the database whether the quantity of the seed and tool to plant is enough
+     * @param crop
+     * @param quantityToAdd
+     * @return suitable message to display
+     * @throws SQLException 
+     */
     public String addCropToPlant(Crop crop, int quantityToAdd) throws SQLException {
         if (crop.checkSeed(quantityToAdd)){
             if (crop.getToolNeeded().getName().equals("None")
@@ -48,6 +55,10 @@ public class AutoFarmerBlock {
         else return"Insufficient seeds to perform the operation";
     }
 
+    /**
+     * Add Planting, Watering, Harvesting tasks and Growth Stages into taskManager
+     * @throws SQLException 
+     */
     public void addTask() throws SQLException{
         for (Map.Entry<Crop, Integer> entryCrop : cropToPlant.entrySet()){
             Crop crop = entryCrop.getKey();
@@ -79,6 +90,14 @@ public class AutoFarmerBlock {
         cropToPlant.clear();
     }
 
+    
+    /**
+     * Add fertiliser if user checks the box
+     * @param task task selected, and the applying fertiliser task will be added to the next
+     * @param fertiliser Type of fertilisers: Bone meal, Super fertiliser
+     * @param controller
+     * @throws SQLException 
+     */
     public void applyFertiliser(Task task, String fertiliser, AutofarmerblockController controller) throws SQLException{
         //fertiliser can only be applied when the task chosen to be execute before the applying fertiliser 
         //operation is "watering" 
@@ -115,6 +134,12 @@ public class AutoFarmerBlock {
     //after the addCrop button is clicked and all tasks are added into the queue, starts running the task 
     //one by one
     //complete one task, dequeue -> poll()
+    
+    /**
+     * Run all the tasks in the taskManager
+     * @param controller
+     * @throws SQLException 
+     */
     public void runTask(AutofarmerblockController controller) throws SQLException {
         while (!taskManager.isEmpty()){
             Task taskToRun = taskManager.peek();

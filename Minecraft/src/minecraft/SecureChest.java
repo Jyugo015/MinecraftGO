@@ -125,6 +125,12 @@ public class SecureChest {
     // }
 
     // Method to set the security level of the chest
+    /**
+     * Edit security level of the secure chest (public/private/self-defined)
+     * @param level 
+     * @param username 
+     * @throws SQLException 
+     */
     public void editSecurityLevel(String level, String username) throws SQLException {
         securityLevel = level;
         if (level.equals("Private"))
@@ -133,6 +139,12 @@ public class SecureChest {
     }
 
     // Method to grant access to a player: owner wants to add / remove someone to access this chest
+    /**
+     * Edit access level of a user
+     * @param username
+     * @param type 0(NO_ACCESS),1(VIEW_ONLY),2(FULL_ACCESS)
+     * @throws SQLException 
+     */
     public void editAccess(String username, int type) throws SQLException {
         // set at controller if (securityLevel == "Public" || securityLevel == "Self-Defined") {
             accessPermissions.put(username, type);
@@ -142,12 +154,22 @@ public class SecureChest {
         // else return "This is a private chest";
     }
 
+    /**
+     * Edit the Secure Chest's name
+     * @param newName
+     * @throws SQLException 
+     */
     public void editChestName(String newName) throws SQLException{
         this.name = newName;
         database_item7.editChestName(owner, newName);
     }
 
      // Method to check if a player has access to the chest
+    /**
+     * Check the access level of the user
+     * @param username
+     * @return 0 if the security level is PRIVATE, entry.getValue() is the security level is PUBLIC/SELF_DEFINED
+     */
      public int hasAccess(String username) {
         // if (securityLevel == "Public" || securityLevel == "Self-Defined") {
             for (Map.Entry<String, Integer> entry: accessPermissions.entrySet()){
@@ -160,6 +182,11 @@ public class SecureChest {
         // }
     }
     
+     /**
+      * Remove authorised user from the permission list
+      * @param username
+      * @throws SQLException 
+      */
     public void removeAuthorisedUser(String username) throws SQLException{
         database_item7.removeApprovedUser(owner,username);
         accessPermissions.remove(username);
@@ -167,6 +194,12 @@ public class SecureChest {
     }
 
     // Method to approve access request
+    /**
+     * Approve the user to access the chest
+     * @param username 
+     * @param type the user request's access level
+     * @throws SQLException 
+     */
     public void approveRequest(String username, int type) throws SQLException {
         // if (accessRequestsFromOther.keySet().contains(username)) {
             accessPermissions.put(username, type);
@@ -181,6 +214,11 @@ public class SecureChest {
     }
 
     // Method to reject access request
+    /**
+     * Reject access request
+     * @param username
+     * @throws SQLException 
+     */
     public void rejectRequest(String username) throws SQLException {
         // if (accessRequestsFromOther.keySet().contains(username)) {
             accessRequestsFromOther.remove(username);
@@ -217,6 +255,13 @@ public class SecureChest {
     //     }
     // }
     
+    /**
+     * Deposit items into the secure chest
+     * @param username
+     * @param item 
+     * @param quantity quantity of the item
+     * @throws SQLException 
+     */
     public void deposit (String username, EnderBackpackItem item, int quantity) throws SQLException {
         // if (hasAccess(username)==2) {
             database_item7.deposit(owner, username, item, quantity);
@@ -235,6 +280,13 @@ public class SecureChest {
         // }
     }
     
+    /**
+     * Withdraw items from the secure chest
+     * @param username
+     * @param item
+     * @param quantity quantity of the item
+     * @throws SQLException 
+     */
     public void withdraw (String username, EnderBackpackItem item, int quantity) throws SQLException {
         // if (hasAccess(username)==2) {
             database_item7.withdraw(owner, username, item, quantity);

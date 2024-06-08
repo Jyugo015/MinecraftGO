@@ -1,17 +1,13 @@
 package minecraft;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -41,10 +37,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 
 public class AutomatedSortingChest extends Application {
@@ -107,12 +103,22 @@ public class AutomatedSortingChest extends Application {
                 Logger.getLogger(AutomatedSortingChest.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+        
+        
+        stage.setOnCloseRequest((WindowEvent t) -> {
+            try {
+                MainPage mainpage = new MainPage();
+                mainpage.start(new Stage());
+            } catch (IOException ex) {
+                System.out.println("Failed to go to the main page");
+            }
+        });
 
         totalNoOfEnderBackpackItemInChest = labelSetting(totalNoOfEnderBackpackItemInChest);
         totalNoOfEnderBackpackItemOfCategory = labelSetting(totalNoOfEnderBackpackItemOfCategory);
         
         pane1.setPadding(new Insets(10,10,10,10));
-        backgroundImage = new Image(getClass().getResourceAsStream("/minecraft/icon/background.jpeg"));
+        backgroundImage = new Image(getClass().getResourceAsStream("/minecraft/icon/background.jpg"));
         stage = primaryStage;
         Image icon1 = new Image(getClass().getResourceAsStream("/minecraft/icon/AutomatedSortingChest.png"));
         stage.getIcons().clear();
@@ -127,6 +133,7 @@ public class AutomatedSortingChest extends Application {
         pane1 = new BorderPane();
         updateAll();
         Label categoriesLabel = new Label("Categories: ");
+        categoriesLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         
         ChoiceBox<String> categoriesChoiceBox = new ChoiceBox<>();
         categoriesChoiceBox.setValue("(Include ALL)");
@@ -148,15 +155,10 @@ public class AutomatedSortingChest extends Application {
         VBox topPane = new VBox(); 
         topPane.getChildren().addAll(totalNoOfEnderBackpackItemInChest, categoriesLabel,reminder,categoriesChoiceBox,searchEnderBackpackItemTextField,totalNoOfEnderBackpackItemOfCategory);
         
-        totalNoOfEnderBackpackItemInChest.getStyleClass().add("text-body");
-        categoriesLabel.getStyleClass().add("text-body");
-        reminder.getStyleClass().add("warningtext");
-        categoriesChoiceBox.getStyleClass().add("menu-button");
-        searchEnderBackpackItemTextField.getStyleClass().add("textfield");
-        totalNoOfEnderBackpackItemOfCategory.getStyleClass().add("text-body");
         // Bottom pane
         HBox bottomPane = new HBox();
-        Text quantityText = new Text("Quantity: ");
+        Label quantityText = new Label("Quantity: ");
+        quantityText.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         bottomPane.getChildren().addAll(quantityText,quantityToAddOrRemove,addcurrentEnderBackpackItemButton,removeCurrentEnderBackpackItemButton,backToMainPageButton);
         
         // Right pane
@@ -247,10 +249,6 @@ public class AutomatedSortingChest extends Application {
     
     // Scene2: Add new EnderBackpackItem
     private Scene scene2 () {
-
-        Scene scene = new Scene(pane1, 600,400);
-        scene.getStylesheets().add(getClass().getResource("minecraft-style.css").toExternalForm());
-
         unsortedEnderBackpackItemNameArrayList.clear();
         unsortedEnderBackpackItemQuantityArrayList.clear();
         try {
@@ -267,8 +265,7 @@ public class AutomatedSortingChest extends Application {
         }
         
         pane1 = new BorderPane();
-        Label unsortedEnderBackpackItemText = new Label("Name of new Ender Backpack Item to add: ");
-        unsortedEnderBackpackItemText.getStyleClass().add("text-subtitle");
+        Text unsortedEnderBackpackItemText = new Text("Name of new EnderBackpackItem to add: ");
         ObservableList<String> EnderBackpackItemsObservableValue = FXCollections.observableArrayList();
         EnderBackpackItemsObservableValue.clear();
         for (int i = 0; i < unsortedEnderBackpackItemNameArrayList.size(); i++) {
@@ -346,13 +343,15 @@ public class AutomatedSortingChest extends Application {
             unsortedEnderBackpackItemNameArrayList.clear();
             unsortedEnderBackpackItemQuantityArrayList.clear();
             EnderBackpackItemsListView.getItems().clear();
-            pane1.setCenter(EnderBackpackItemsListView);
+            centerPane.setContent(EnderBackpackItemsListView);
+            pane1.setCenter(centerPane);
         });
         
         // Back to previous scene
         backButton.setOnAction(e->{stage.setScene(scene1());});
         
-        
+        Scene scene = new Scene(pane1, 600,400);
+        scene.getStylesheets().add(getClass().getResource("minecraft-style.css").toExternalForm());
         return scene;
     }
     

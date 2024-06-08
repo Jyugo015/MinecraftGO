@@ -76,6 +76,7 @@ public class MultitoolGUIController extends database_item2 implements Initializa
     }
 
     private void updateToolListView() throws SQLException {
+        
         ObservableList<Tool> observableTools = FXCollections.observableArrayList(toolslist);
         toolList.setItems(observableTools);
         // 强制刷新 ListView 来显示最新的数据
@@ -118,8 +119,10 @@ public class MultitoolGUIController extends database_item2 implements Initializa
     @FXML
     private void handleClearList() throws SQLException {
         List<Tool> multipletoollist = multipleTools.getAllTools();
-        for (Tool tool : multipletoollist)
+        for (Tool tool : multipletoollist){
             database_itemBox.addItem(username, tool.getName(), 1);
+            toolslist.add(tool);
+        }
         multipleTools.clear();
         database_item2.clearMultiTool(username);
         updateMultiToolListView();

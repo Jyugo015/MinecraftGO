@@ -92,7 +92,7 @@ public class CreatureEncyclopediaController implements Initializable {
 
     @FXML
     private void handleFilter(ActionEvent event) {
-        List<String> types = Arrays.asList("Undead Mobs", "Passive Mobs", "Neutral Mobs", "Arthropods", "Illagers");
+        List<String> types = Arrays.asList("Undead Mobs","Flying mobs", "Passive Mobs", "Neutral Mobs", "Birds", "Mammals","Aquatic Mobs","Hostile Mobs");
         ChoiceDialog<String> dialog = new ChoiceDialog<>(types.get(0), types);
         dialog.setTitle("Filter by Type");
         dialog.setHeaderText("Select the type to filter by:");

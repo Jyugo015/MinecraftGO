@@ -180,20 +180,20 @@ public class database_summary {
     }
 
     public static void initializeTeleportationPoint() throws SQLException {
-        TeleportationNetworkController.Point n1 = new TeleportationNetworkController.Point("A", "defaultUser", 50, 60, null, null, null);
-        TeleportationNetworkController.Point n2 = new TeleportationNetworkController.Point("B", "user1", 700, 500, null, null, null);
-        TeleportationNetworkController.Point n3 = new TeleportationNetworkController.Point("C", "user2", 400, 50, null, null, null);
-        TeleportationNetworkController.Point n4 = new TeleportationNetworkController.Point("D", "user3", 700, 100, null, null, null);
-        TeleportationNetworkController.Point[] points = {n1, n2, n3, n4};
-        for (TeleportationNetworkController.Point p : points) {
-            TeleportationNetworkController.addNewNode(p.getNameOfTeleportationPoint(), p.getOwner(), p.getX(), p.getY(), p.getNeighbours(), p.getFriendRequestsReceived(), p.getFriendWaitingAcceptance());
-        }
-        n1.sendFriendRequest("B");
-        n3.sendFriendRequest("B");
-        n4.sendFriendRequest("B");
-        n2.acceptFriendRequest("A");
-        n2.acceptFriendRequest("C");
-        n2.acceptFriendRequest("D");
+            TeleportationNetworkController.Point n1 =  new TeleportationNetworkController.Point("A", "defaultUser", 50,60,null,null,null);
+            TeleportationNetworkController.Point n2 =  new TeleportationNetworkController.Point("B", "user1", 200, 100,null,null,null);
+            TeleportationNetworkController.Point n3 =  new TeleportationNetworkController.Point("C", "user2", 400, 50,null,null,null);
+            TeleportationNetworkController.Point n4 =  new TeleportationNetworkController.Point("D", "user3", 300, 300,null,null,null);
+            TeleportationNetworkController.Point[] points = {n1,n2,n3,n4};
+            for (TeleportationNetworkController.Point p : points) {
+                TeleportationNetworkController.addNewNode(p.getNameOfTeleportationPoint(),p.getOwner(), p.getX(), p.getY(), p.getNeighbours(), p.getFriendRequestsReceived(), p.getFriendWaitingAcceptance());
+            }
+            n1.sendFriendRequest("B");
+            n3.sendFriendRequest("B");
+            n4.sendFriendRequest("B");
+            n2.acceptFriendRequest("A");
+            n2.acceptFriendRequest("C");
+            n2.acceptFriendRequest("D");
     }
 
     public static void initializeItemBox() throws SQLException {

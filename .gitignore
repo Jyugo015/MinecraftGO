@@ -2,6 +2,7 @@
 /Minecraft/nbproject/private/
 /Minecraft/build/
 /Minecraft/dist/
+
 /Minecraft/src/minecraft/databasse_item1.java
 /Minecraft/src/minecraft/databasse_item2.java
 /Minecraft/src/minecraft/databasse_item3.java
@@ -12,4 +13,5 @@
 /Minecraft/src/minecraft/databasse_item8.java
 /Minecraft/src/minecraft/databasse_item9.java
 /Minecraft/src/minecraft/databasse_itemBox.java
+/Minecraft/src/minecraft/databasse_summary.java
 /Minecraft/src/minecraft/databasse_user.java

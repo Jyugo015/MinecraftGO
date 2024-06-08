@@ -40,6 +40,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 
 public class AutomatedSortingChest extends Application {
@@ -102,12 +103,22 @@ public class AutomatedSortingChest extends Application {
                 Logger.getLogger(AutomatedSortingChest.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+        
+        
+        stage.setOnCloseRequest((WindowEvent t) -> {
+            try {
+                MainPage mainpage = new MainPage();
+                mainpage.start(new Stage());
+            } catch (IOException ex) {
+                System.out.println("Failed to go to the main page");
+            }
+        });
 
         totalNoOfEnderBackpackItemInChest = labelSetting(totalNoOfEnderBackpackItemInChest);
         totalNoOfEnderBackpackItemOfCategory = labelSetting(totalNoOfEnderBackpackItemOfCategory);
         
         pane1.setPadding(new Insets(10,10,10,10));
-        backgroundImage = new Image(getClass().getResourceAsStream("/minecraft/icon/background.jpeg"));
+        backgroundImage = new Image(getClass().getResourceAsStream("/minecraft/icon/background.jpg"));
         stage = primaryStage;
         Image icon1 = new Image(getClass().getResourceAsStream("/minecraft/icon/AutomatedSortingChest.png"));
         stage.getIcons().clear();
@@ -122,6 +133,7 @@ public class AutomatedSortingChest extends Application {
         pane1 = new BorderPane();
         updateAll();
         Label categoriesLabel = new Label("Categories: ");
+        categoriesLabel.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         
         ChoiceBox<String> categoriesChoiceBox = new ChoiceBox<>();
         categoriesChoiceBox.setValue("(Include ALL)");
@@ -145,7 +157,8 @@ public class AutomatedSortingChest extends Application {
         
         // Bottom pane
         HBox bottomPane = new HBox();
-        Text quantityText = new Text("Quantity: ");
+        Label quantityText = new Label("Quantity: ");
+        quantityText.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
         bottomPane.getChildren().addAll(quantityText,quantityToAddOrRemove,addcurrentEnderBackpackItemButton,removeCurrentEnderBackpackItemButton,backToMainPageButton);
         
         // Right pane
@@ -330,7 +343,8 @@ public class AutomatedSortingChest extends Application {
             unsortedEnderBackpackItemNameArrayList.clear();
             unsortedEnderBackpackItemQuantityArrayList.clear();
             EnderBackpackItemsListView.getItems().clear();
-            pane1.setCenter(EnderBackpackItemsListView);
+            centerPane.setContent(EnderBackpackItemsListView);
+            pane1.setCenter(centerPane);
         });
         
         // Back to previous scene

@@ -3,15 +3,15 @@
 /Minecraft/build/
 /Minecraft/dist/
 
-/Minecraft/src/minecraft/databasse_item1.java
-/Minecraft/src/minecraft/databasse_item2.java
-/Minecraft/src/minecraft/databasse_item3.java
-/Minecraft/src/minecraft/databasse_item4.java
-/Minecraft/src/minecraft/databasse_item5.java
-/Minecraft/src/minecraft/databasse_item6.java
-/Minecraft/src/minecraft/databasse_item7.java
-/Minecraft/src/minecraft/databasse_item8.java
-/Minecraft/src/minecraft/databasse_item9.java
-/Minecraft/src/minecraft/databasse_itemBox.java
-/Minecraft/src/minecraft/databasse_summary.java
-/Minecraft/src/minecraft/databasse_user.java
+/Minecraft/src/minecraft/database_item1.java
+/Minecraft/src/minecraft/database_item2.java
+/Minecraft/src/minecraft/database_item3.java
+/Minecraft/src/minecraft/database_item4.java
+/Minecraft/src/minecraft/database_item5.java
+/Minecraft/src/minecraft/database_item6.java
+/Minecraft/src/minecraft/database_item7.java
+/Minecraft/src/minecraft/database_item8.java
+/Minecraft/src/minecraft/database_item9.java
+/Minecraft/src/minecraft/database_itemBox.java
+/Minecraft/src/minecraft/database_summary.java
+/Minecraft/src/minecraft/database_user.java

@@ -25,7 +25,6 @@ public class BinarySearchTree<E extends EnderBackpackItem> {
     
     public void add(String EnderBackpackItemName, int quantity) throws SQLException {
         EnderBackpackItem EnderBackpackItem = database_itemBox.getEnderBackpackItem(username,EnderBackpackItemName);
-        System.out.println("quantity in binary tree search add: " + quantity + " of " + EnderBackpackItemName + " type " + EnderBackpackItem.type==null ? database_item4.getEnderBackpackItem(username, EnderBackpackItemName) : EnderBackpackItem.type);
         if (root == null) {
             root = new Node<>(EnderBackpackItem);
             add(EnderBackpackItemName, quantity);

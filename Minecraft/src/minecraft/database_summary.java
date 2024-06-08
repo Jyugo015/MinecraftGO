@@ -221,10 +221,10 @@ public class database_summary {
         database_itemBox.addItem(username, "Blaze Powder", "Weapon", "To fuel brewing stands, to brew strength potions, and to make eyes of ender to take the player to the end", 15);
         database_itemBox.addItem(username, "Diamond", "Material", "To make the best weapons and armour in the game", 15);
         database_itemBox.addItem(username, "Potato", "Food", "To breed Pigs and Villagers", 15);
+        database_itemBox.addItem(username, "Brick","Material", "To craft brick blocks, flower pots, and decorated pots",15);
         database_itemBox.addItem(username, "Clay", "Material", "To be smelted in a furnace to create clay bricks which can further be crafted into brick blocks; craft blocks of clay", 15);
         database_itemBox.addItem(username, "Music Disc Wait", "Record", "Play the song with the jukebox", 15);
         database_itemBox.addItem(username, "Golden Horse Armor", "Armor", "To provides protection to the player", 15);
-        database_itemBox.addItem(username, "Chorus Fruit", "Food", "To be eaten as food, or smelted into popped chorus fruit", 15);
         database_itemBox.addItem(username, "Trident", "Weapon", "To summon a lightning bolt if there is a thunderstorm", 15);
         database_itemBox.addItem(username, "Dye Pink", "Dye", "To apply a pink color to objects", 15);
         database_itemBox.addItem(username, "Apple", "Food", "To be eaten by the player as food items", 15);
@@ -233,6 +233,7 @@ public class database_summary {
         database_itemBox.addItem(username, "Allay Spawn Egg", "Mob Egg", "To instantly spawn an allay", 15);
         database_itemBox.addItem(username, "Swords", "Weapon", "To deal damage to entities or for breaking certain blocks faster than by hand", 15);
         database_itemBox.addItem(username, "Dye Black", "Dye", "To apply a black color to objects", 15);
+        database_itemBox.addItem(username, "Sheep Spawn Egg", "Mob Egg", "To instantly spawn a sheep", 15);
         database_itemBox.addItem(username, "Sweet Berries", "Food", "To breed foxes and bought off of Butcher Villagers", 15);
         database_itemBox.addItem(username, "Music Disc Far", "Record", "Play the song with the jukebox", 15);
         database_itemBox.addItem(username, "Cow Spawn Egg", "Mob Egg", "To instantly spawn a cow", 15);

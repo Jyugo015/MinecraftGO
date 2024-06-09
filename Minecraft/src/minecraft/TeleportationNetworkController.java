@@ -10,6 +10,13 @@ public class TeleportationNetworkController {
     private static List<List<Edge>> adjacencyList = new ArrayList<>();
     private static List<Edge> edges = new ArrayList<>();
     
+    
+    /**
+     * Adds teleportation points from the database into the data structure of the graph.
+     *
+     * @param nodesFromDB The nodes from the database to be added into the data structure of the graph
+     * @return True if the teleportation points are added from the database into the data structure of the graph
+     */
     public static boolean restoreNode(ArrayList<Point> nodesFromDB) throws SQLException {
         for (Point p : nodesFromDB) {
             boolean inDatabaseDuplicated = false;
@@ -41,6 +48,18 @@ public class TeleportationNetworkController {
         return true;
     }
     
+    /**
+     * Adds new teleportation points into the graph.
+     *
+     * @param newNode The name of the nodes to be added into graph
+     * @param owner The username that create the nodes
+     * @param x The x-coordinate of the nodes
+     * @param y The y-coordinate of the nodes
+     * @param neighbours The neighbors of the nodes
+     * @param friendRequestsReceived The friend request received from other nodes
+     * @param friendWaitingAcceptance The friend request sent to other nodes
+     * @return True if the teleportation points are added from the database into the data structure of the graph
+     */
     public static boolean addNewNode(String newNode, String owner, float x, float y, ArrayList<String> neighbours, ArrayList<String> friendRequestsReceived, ArrayList<String> friendWaitingAcceptance) throws SQLException{
         for (int i = 0; i < nodes.size(); i++) {
             if (nodes.get(i).nameOfTeleportationPoint.equals(newNode)){
@@ -62,6 +81,12 @@ public class TeleportationNetworkController {
         return true;
     }
     
+    /**
+     * Remove teleportation points from the graph.
+     *
+     * @param nodeName The name of the nodes to be removed from graph
+     * @return True if the teleportation points is removed from the graph
+     */
     public static boolean removeNode(String nodeName) throws SQLException {
         Point node = getNode(nodeName);
         int indexCurrent = getIndex(node.nameOfTeleportationPoint);
@@ -113,10 +138,21 @@ public class TeleportationNetworkController {
         return false;
     }
     
+    /**
+     * Get the edges of the graph.
+     *
+     * @return List of edges of the graph
+     */
     public static List<Edge> getEdges() {
         return edges;
     }
     
+    /**
+     * Get the neighbors of the teleportation point.
+     *
+     * @param nodename The name of the teleportation point to find its neighbors
+     * @return List of names of neighbors  of the point, null if the node doesn't exist
+     */
     public static ArrayList<String> getNeighbours(String nodename) {
         Point node = getNode(nodename);
         if (node != null && ! node.neighbours.isEmpty()) {
@@ -131,10 +167,22 @@ public class TeleportationNetworkController {
         return null;
     }
     
+    /**
+     * Check if the teleportation point is inside the network graph
+     *
+     * @param nodeName The name of the teleportation point to search
+     * @return True if the teleportation point is inside the network graph
+     */
     public static boolean contains(Point nodeName) {
         return getNode(nodeName.getNameOfTeleportationPoint()) != null;
     }
     
+    /**
+     * Find the index of the node in the list of points in the network
+     *
+     * @param nodeName The name of the teleportation point to search
+     * @return The index if the teleportation point is inside the network graph, -1 if the node is not found
+     */
     protected static int getIndex(String nodeName) {
         for (int i = 0; i < nodes.size(); i++) {
             if (nodes.get(i).nameOfTeleportationPoint.equals(nodeName)) {
@@ -145,20 +193,33 @@ public class TeleportationNetworkController {
         return -1;
     }
     
+    /**
+     * @return The sum of the teleportation point inside the network graph
+     */
     public static int totalNodes() {
         return nodes.size();
     }
 
-    public static List<List<Edge>> getAdjacencyList() {
+    /**
+     * @return The adjacency list of the network graph
+     */
+    private static List<List<Edge>> getAdjacencyList() {
         return adjacencyList;
     }
 
+    /**
+     * @return All the teleportation points in the network graph
+     */
     public static List<Point> getNodes() {
         return nodes;
     }
     
-    
-    // bfs to find the number of connected nodes 
+    /**
+     * Use breadth first search to find the number of connected nodes 
+     *
+     * @param teleportationPoint The name of the teleportation point as starting point
+     * @return A list of the points that can be reached by the teleportationPoint
+     */
     public static ArrayList<Point> BFSnodesCanBeReached(Point teleportationPoint) {
         ArrayList<Point> reachableNode = new ArrayList<>();
         reachableNode.add(teleportationPoint);
@@ -178,6 +239,10 @@ public class TeleportationNetworkController {
         return reachableNode;
     }
     
+    /**
+     * @param nodeName The name of the node to be searched
+     * @return The point in the network graph if the point exist
+     */
     public static Point getNode(String nodeName) {
         for (int i = 0; i < nodes.size(); i++) {
             if (nodes.get(i).getNameOfTeleportationPoint().equals(nodeName)) {
@@ -187,6 +252,13 @@ public class TeleportationNetworkController {
         return null;
     }
     
+    /**
+     * Search the shortest path to go from start to the destination point using Dijkstra's algorithm
+     * 
+     * @param start The starting point
+     * @param dest The destination point to go
+     * @return The list of nodes which has the minimum distance to go from start to destination
+     */
     public static ArrayList<Point> shortestPath(String start, String dest) {
         Point currentPoint = getNode(start);
         Point destinationPoint = getNode(dest);
@@ -256,6 +328,11 @@ public class TeleportationNetworkController {
         return shortestPath;
     }
     
+    /**
+     * @param teleportationPoint The starting point
+     * @param destination The destination point to go
+     * @return The numerical value of the shortest distance between 2 points
+     */
     public static double shortestDistance(String teleportationPoint, String destination) {
         ArrayList<Point> shortestPath = shortestPath(teleportationPoint, destination);
         if (shortestPath == null) {
@@ -269,7 +346,12 @@ public class TeleportationNetworkController {
         return distance;
     }
     
-    public static double getDistance(Point teleportationPoint, Point destination) {
+    /**
+     * @param teleportationPoint The starting point
+     * @param destination The destination point to go
+     * @return The numerical value of the distance between 2 connected points
+     */
+    private static double getDistance(Point teleportationPoint, Point destination) {
         for (Edge edge : adjacencyList.get(getIndex(teleportationPoint.getNameOfTeleportationPoint()))) {
             if (edge.n2.equals(destination)) {
                 System.out.println("Edge: " + edge);
@@ -279,6 +361,10 @@ public class TeleportationNetworkController {
         return -1;
     }
     
+    /**
+     * @param owner The username
+     * @return All of the teleportation points created by the user
+     */
     public static ArrayList<Point> nodesOfOwner(String owner) {
         ArrayList<Point> belong = new ArrayList<>();
         for (Point node : nodes) {
@@ -313,14 +399,27 @@ public class TeleportationNetworkController {
             this.friendWaitingAcceptance = friendWaitingAcceptance == null ? new ArrayList<>() : friendWaitingAcceptance;
         }
 
+        
+        /**
+         * @return All of the friend request sent by the other teleportation points to become neighbor
+         */
         public ArrayList<String> getFriendRequestsReceived() {
             return friendRequestsReceived;
         }
 
+        /**
+         * @return All of the friend request sent to the other teleportation points that wait for acceptance to become neighbor
+         */
         public ArrayList<String> getFriendWaitingAcceptance() {
             return friendWaitingAcceptance;
         }
 
+        /**
+         * Send friend request to other teleportation point
+         * 
+         * @param requestReciepient The teleportation point that will receive the invitation to become neighbor
+         * @return True if the friend request is successfully sent to the other teleportation points
+         */
         public boolean sendFriendRequest(String requestReciepient) throws SQLException{
             Point reciepient = getNode(requestReciepient);
 
@@ -343,6 +442,13 @@ public class TeleportationNetworkController {
             return false;
         }
     
+        /**
+         * Accept the friend request sent by other teleportation point and
+         * become neighbor, forming edge between them
+         * 
+         * @param requestSender The teleportation point that has sent the invitation to become neighbor
+         * @throws SQLException if the sender cannot be found in the database
+         */
         public void acceptFriendRequest(String requestSender) throws SQLException{
             Point sender = getNode(requestSender);
 

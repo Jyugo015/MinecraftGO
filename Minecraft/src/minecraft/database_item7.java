@@ -51,9 +51,12 @@ public class database_item7 {
         addRequest("defaultUser", "defaultUser7", 1);
         addRequest("defaultUser7", "defaultUser", 2);
         createNewChest("defaultName8", "Self-defined", "defaultUser8", "defaultUser8", 2);
-        // addItemManually("defaultUser", "Apple", "Tool", "Attacking", 3);
-        // addItemManually("defaultUser", "Screwdriver", "Tool", "Turning screws", 4);
-        // addItemManually("defaultUser", "Wrench", "Tool", "Hammering nails", 5);
+        addItemManually("defaultUser2", "Apple", "Food", "To be eaten by the player as food items ", 3);
+        addItemManually("defaultUser2", "Trident", "Weapon", "To summon a lightning bolt if there is a thunderstorm", 4);
+        addItemManually("defaultUser2", "Music Disc Far", "Record", "Play the song with the jukebox", 5);
+        addItemManually("defaultUser3", "Map", "Tool", "To display any and all players in the world and their locations", 10);
+        addItemManually("defaultUser3", "Melon Slice", "Food", "To craft recipe of glistering melons; 50% chance to raise the compost level of new composter by 1;", 8);
+        addItemManually("defaultUser3", "Elytra", "Transportation", "Use arrows or fireworks as ammunition", 15);
     }
 
     public static void initialize(String username) throws SQLException{

@@ -24,7 +24,10 @@ public class newPotionSatchel extends Potions{
     private int size;
     private Potion currentPotion;
     
-    
+      
+    /**
+     * Constructs a new PotionSatchel with default values.
+     */
     public newPotionSatchel() {
         Potions potions = new Potions();
         
@@ -33,15 +36,29 @@ public class newPotionSatchel extends Potions{
         this.currentPotion = null;
     }
      
+     /**
+     * Gets the size of the satchel.
+     *
+     * @return the size of the satchel
+     */
     public int getSize(){
         return size;
     }
 
+     /**
+     * Gets the head potion of the satchel.
+     *
+     * @return the head potion of the satchel
+     */
     public Potion getHead(){
         return this.head;
     }
      
-    // Method to add potion to satchel based on index(referring to the potionMap)
+    /**
+     * Adds a potion to the satchel based on its index in the potion map.
+     *
+     * @param index the index of the potion in the potion map
+     */
     public void addPotionByIndex(int index) {
         if (index >= 1 && index <= getPotionsMap().size()) {
             Scanner scanner = new Scanner(System.in);
@@ -62,6 +79,12 @@ public class newPotionSatchel extends Potions{
         }
     }
     
+    
+    /**
+     * Adds a potion to the satchel.
+     *
+     * @param potion the potion to add
+     */
     public void addPotionToSatchel(Potion potion){
         Potion newNode = new Potion(potion.getName(), potion.getPotency(), potion.getEffect());
         
@@ -78,8 +101,10 @@ public class newPotionSatchel extends Potions{
         size++;
     }
     
-    //method to display potions in the potion satchel
     
+    /**
+     * Displays the contents of the potion satchel.
+     */
     public void displaySatchelContents(){
         //Start from the head of the Satchel
         Potion temp = head;
@@ -90,6 +115,12 @@ public class newPotionSatchel extends Potions{
         }
     }
 
+    /**
+     * Removes a potion from the satchel.
+     *
+     * @param potion the potion to remove
+     * @throws SQLException if there is an error during database interaction
+     */
     public void removePotion(Potion potion) throws SQLException{
         int index = -1, tempIndex=1;
         Potion current = head;
@@ -104,21 +135,25 @@ public class newPotionSatchel extends Potions{
         removePotionByIndex(index);
     }
     
+    /**
+     * Removes a potion from the satchel based on its index.
+     *
+     * @param index the index of the potion to remove
+     * @throws SQLException if there is an error during database interaction
+     */
     public void removePotionByIndex(int index) throws SQLException {
-    if (index >= 1 && index <= size) { //size = current size of the satchel
-        if (index == 1) { //当index=1, 排在第一个的药水会被remove
-            // If the potion to be removed is the head
-            head = head.nextPotion; //在head 后面的药水就会变成head
+    if (index >= 1 && index <= size) {
+        if (index == 1) { 
+            head = head.nextPotion; 
             
         } else {
-            //if index 不是1的话 就证明被remove 的不是head, 要traverse the satchel from head to find the potion just before the one to be removed/ b4 the specified index
-            // Find the potion at the specified index
+           
             Potion previous = head;
             
             for (int i = 1; i < index - 1; i++) {
                 previous = previous.nextPotion;
             }
-            // Skip the potion at the specified index
+            
             previous.nextPotion = previous.nextPotion.nextPotion;
         }
         size--;
@@ -127,17 +162,7 @@ public class newPotionSatchel extends Potions{
             System.out.println("Invalid index. No potion removed from the satchel.");
         }
     }
-      /*
-            When the potion at index 1 is removed, the linked list becomes:
-            Potion 2 -> Potion 3 -> Potion 4 -> Potion 5
-    
-            Then, when the potion at index 2 is removed, the linked list becomes:
-    
-            At this point, the linked list contains only 3 potions. Since there is no potion at index 4 or 5, attempting to remove a potion at those indices results in an "Invalid index" message.    
-    
-    
-    */
-
+      
     public void displayPotionsForPvP() {
         System.out.println("\nPotions for PvP Battle:");
         Potion temp = head;

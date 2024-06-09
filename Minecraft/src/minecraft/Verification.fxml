@@ -15,6 +15,6 @@
          </font></Label>
         <TextField fx:id="verificationCodeField" promptText="Verification Code" styleClass="text-body" stylesheets="@minecraft-style.css" />
         <Button onAction="#handleVerifyButtonAction" stylesheets="@minecraft-style.css" text="Verify" />
-        <Label fx:id="errorLabel" textFill="RED" />
+        <Label fx:id="errorLabel" contentDisplay="CENTER" prefHeight="11.0" prefWidth="161.0" styleClass="text-custom" stylesheets="@minecraft-style.css" textFill="RED" />
     </VBox>
 </AnchorPane>

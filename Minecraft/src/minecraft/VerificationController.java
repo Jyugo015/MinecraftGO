@@ -73,6 +73,9 @@ public class VerificationController implements Initializable {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Signup Successful");
         alert.setHeaderText(null); // No header text
+        String cssFilePath = getClass().getResource("minecraft-style.css").toExternalForm();
+        alert.getDialogPane().getStylesheets().add(cssFilePath);
+        alert.getDialogPane().getStyleClass().add("dialog-pane");
 
         // Create the content text with a larger font size
         Label contentText = new Label("Your signup was successful!");

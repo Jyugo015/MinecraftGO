@@ -84,7 +84,9 @@ public class ForgotPasswordController implements Initializable {
 
             Stage stage = new Stage();
             stage.setTitle("Reset Password");
-            stage.setScene(new Scene(root));
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("minecraft-style.css").toExternalForm());
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

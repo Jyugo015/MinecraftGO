@@ -73,7 +73,7 @@ public class TeleportationNetworkController_GUI extends Application {
     private static ArrayList<Line> edges = new ArrayList<>();
     private static Label reminder = new Label();
     private static String username;
-    private static int fontSize = 13;
+    private static int fontSize = 12;
     private static Circle imaginaryCircle = new Circle(r);
     private static SingleTeleportationPoint currentPoint;
     private static SingleTeleportationPoint currentlySelected;
@@ -152,6 +152,8 @@ public class TeleportationNetworkController_GUI extends Application {
         reminder.setWrapText(true);
         reminder.setTextFill(Color.WHITE);
         reminder.setFont(new Font(fontSize));
+        reminder.getStyleClass().add("dialog-pane");
+        reminder.setStyle("-fx-font-size: 10;");
         mainScene();
         
     }
@@ -436,7 +438,9 @@ public class TeleportationNetworkController_GUI extends Application {
         Button cancelButton = new Button("Cancel");
         Button confirmAddButton = new Button("Confirm");
         Text text = new Text("Your new teleportation point's name: ");
+        text.getStyleClass().add("dialog-pane");
         Text warningText = new Text("");
+        warningText.getStyleClass().add("dialog-pane");
         TextField TPnameTextField = new TextField();
         BorderPane pane = new BorderPane();
         Stage stage = new Stage();
@@ -503,13 +507,17 @@ public class TeleportationNetworkController_GUI extends Application {
             reminder.setText("Opps! You failed in creating a new point!");
             mainScene();
         });
-        
-        stage.setWidth(400);
-        stage.setHeight(200);
+
+        stage.setWidth(500);
+        stage.setHeight(150);
         stage.setTitle("Creating new point");
         Scene scene = new Scene(pane, 600,400);
         scene.getStylesheets().add(getClass().getResource("minecraft-style.css").toExternalForm());
         Image icon1 = new Image(getClass().getResourceAsStream("/minecraft/icon/teleportation.png"));
+        
+        String cssFilePath = getClass().getResource("minecraft-style.css").toExternalForm();
+        scene.getStylesheets().add(cssFilePath);
+
         stage.getIcons().clear();
         stage.getIcons().add(icon1);
         stage.setScene(scene);
@@ -521,6 +529,7 @@ public class TeleportationNetworkController_GUI extends Application {
         Stage stage = new Stage();
         BorderPane pane = new BorderPane();
         Text text = new Text("Do you want to add neighbours? ");
+        text.getStyleClass().add("dialog-pane");
         Button yesButton = new Button("Yes! Let's join!");
         Button noButton = new Button("Nope! I want to be alone!");
         
@@ -551,11 +560,15 @@ public class TeleportationNetworkController_GUI extends Application {
             mainScene();
         });
         
-        stage.setWidth(300);
+        stage.setWidth(350);
         stage.setHeight(100);
         stage.setTitle("Add neighbour?");
         Scene scene = new Scene(pane);
         scene.getStylesheets().add(getClass().getResource("minecraft-style.css").toExternalForm());
+
+        String cssFilePath = getClass().getResource("minecraft-style.css").toExternalForm();
+        scene.getStylesheets().add(cssFilePath);
+
         Image icon1 = new Image(getClass().getResourceAsStream("/minecraft/icon/teleportation.png"));
         stage.getIcons().clear();
         stage.getIcons().add(icon1);
@@ -758,7 +771,9 @@ public class TeleportationNetworkController_GUI extends Application {
             notificatonImageView.setFitHeight(20);
             notificatonImageView.setFitWidth(20);
             Label nameText = new Label("Name: " + getNodeName());
+            nameText.getStyleClass().add("dialog-pane");
             Label neighbourText = new Label("Neighbour: " + getNeighbours().toString());
+            neighbourText.getStyleClass().add("dialog-pane");
             nameText.setFont(new Font(fontSize));
             neighbourText.setFont(new Font(fontSize));
             nameText.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));

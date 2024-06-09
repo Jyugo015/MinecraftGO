@@ -116,8 +116,10 @@ public class TeleportationNetworkController {
             // remove the friend request from the other requested friend
             for (String requstedNode: node.friendWaitingAcceptance) {
                 Point n = getNode(requstedNode);
-                n.friendRequestsReceived.remove(node.getNameOfTeleportationPoint());
-                database_item5.setRequestGet(requstedNode, n.friendRequestsReceived);
+                if (n!=null) {
+                    n.friendRequestsReceived.remove(node.getNameOfTeleportationPoint());
+                    database_item5.setRequestGet(requstedNode, n.friendRequestsReceived);    
+                }
             }
             
             nodes.remove(node);

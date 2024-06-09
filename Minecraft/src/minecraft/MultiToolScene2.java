@@ -204,8 +204,4 @@ public class MultiToolScene2 extends Application{
         imageView.setImage(toolImage);
         notification.setText("You have switched to " + currentTool.getName());
     }
-    
-    public static void main(String[] args) {
-        launch(args);
-    }
 }

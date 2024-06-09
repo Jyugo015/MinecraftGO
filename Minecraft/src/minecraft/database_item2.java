@@ -14,7 +14,7 @@ public class database_item2 {
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/minecraft";
         String username = "root";
-        String password = "dbqLb1234!";
+        String password = "urpw";
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {

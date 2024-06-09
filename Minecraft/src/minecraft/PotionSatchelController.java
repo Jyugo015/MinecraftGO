@@ -15,7 +15,10 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -113,28 +116,28 @@ public class PotionSatchelController extends database_item3 implements Initializ
         });
     }
 
-    private void startBackgroundThread(){
+    private void startBackgroundThread() {
         int currentNum = satchel.getSize();
-        backgroundThread = new Thread(() -> {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), event -> {
             try {
-                try {
-                    for (int i=0;i<currentNum;i++)
-                        satchel.useFirstPotionAutomatically(this);
-                    addButton.setDisable(false);
-                    doneButton.setDisable(false);
-                    removeButton.setDisable(false);
-                    clearPotionButton.setDisable(false);
-                    displayUsePotion();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                if (satchel.getHead() != null) {
+                    satchel.useFirstPotionAutomatically(this);
+                } else {
+                    Platform.runLater(() -> {
+                        addButton.setDisable(false);
+                        doneButton.setDisable(false);
+                        removeButton.setDisable(false);
+                        clearPotionButton.setDisable(false);
+                        displayUsePotion();
+                    });
+                    ((Timeline) event.getSource()).stop(); // Stop the timeline when all potions are used
                 }
-                
-            } catch (SQLException e) {
+            } catch (SQLException | InterruptedException e) {
                 e.printStackTrace();
             }
-        });
-        backgroundThread.setDaemon(true);
-        backgroundThread.start();
+        }));
+        timeline.setCycleCount(currentNum);
+        timeline.play();
     }
 
     //printing list of potions can be chosen into potionsatchel
@@ -144,6 +147,7 @@ public class PotionSatchelController extends database_item3 implements Initializ
         // potionGrid.setPadding(new Insets(10, 10, 10, 10));
         int row = 0, col = 0;
         buttonPotionMap.clear();
+        potionGrid.getChildren().clear();
         for (Map.Entry<String, Potion> entry : potionMap.entrySet()) {
             Potion potion = entry.getValue();
             String fileName = "/minecraft/icon/" + potion.getName() + ".PNG";
@@ -162,10 +166,13 @@ public class PotionSatchelController extends database_item3 implements Initializ
             
             boolean found = false;
             for (String potionName: potionBag){
-                if (potionName.equals(entry.getKey())){
-                    found= true;
-                }
+                // for (Potion potion1: tempSelectedPotions){
+                    if (potionName.equals(entry.getKey())){
+                        found= true;
+                    }
+                // }
             }
+
             if (!found){
                 button.setDisable(true);
                 button.getStyleClass().add("griditempressed");
@@ -328,7 +335,8 @@ public class PotionSatchelController extends database_item3 implements Initializ
     public void updateSelectedPotionsGrid() {
         selectedPotionGrid.getChildren().clear();
         int col = 0;
-        if (selectedPotions!=null){
+        if (selectedPotions!=null ){
+            System.out.println("Potion size: " + selectedPotions.size());
             for (Potion potion : selectedPotions) {
                 System.out.println(potion.getName());
                 ImageView imageView = new ImageView(new Image(getClass().getResourceAsStream("/minecraft/icon/" + potion.getName() + ".PNG")));
@@ -353,6 +361,8 @@ public class PotionSatchelController extends database_item3 implements Initializ
                 selectedPotionGrid.add(button, col++, 0);
                 selectedPotionMap.put(button, potion);
             }
+        } else {
+            System.out.println("is null");
         }
     }
 

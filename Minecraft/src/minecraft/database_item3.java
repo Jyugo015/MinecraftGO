@@ -63,22 +63,41 @@ public class database_item3 {
     }
 
     public static void removePotion(String username, String potionName) throws SQLException{
-        Connection connection = getConnection();
-        String statement = "DELETE FROM potion WHERE username = ? AND name = ?";
-        PreparedStatement delete = connection.prepareStatement(statement);
-        delete.setString(1, username);
-        delete.setString(2, potionName);
-        delete.executeUpdate();
+        try {
+            Connection connection = getConnection();
+            String statement = "DELETE FROM potion WHERE username = ? AND name = ?";
+            PreparedStatement delete = connection.prepareStatement(statement);
+            delete.setString(1, username);
+            delete.setString(2, potionName);
+            delete.executeUpdate();
+            statement = "SELECT * FROM potion WHERE username = ? AND name =?";
+            PreparedStatement check = connection.prepareStatement(statement);
+            check.setString(1, username);
+            check.setString(2, potionName);
+            ResultSet result = check.executeQuery();
+            if (result.next())
+                System.out.println("not removed");
+            else
+                System.out.println("removed " + potionName);
+        } catch (Exception e) {
+            System.out.println("Failed in removePotion" + e);
+        }
     }
 
-    public static void removePotionSatchel(String username, String potionName,int potency, String effect) throws SQLException{
-        Connection connection = getConnection();
-        String statement = "DELETE FROM potionsatchel WHERE username = ? AND name = ?";
-        PreparedStatement delete = connection.prepareStatement(statement);
-        delete.setString(1, username);
-        delete.setString(2, potionName);
-        delete.executeUpdate();
-        addPotion(username, potionName, potency, effect);
+    public static void removePotionSatchel(String username, String potionName,int potency, String effect) {
+        try {
+            Connection connection = getConnection();
+            String statement = "DELETE FROM potionsatchel WHERE username = ? AND name = ?";
+            PreparedStatement delete = connection.prepareStatement(statement);
+            delete.setString(1, username);
+            delete.setString(2, potionName);
+            delete.executeUpdate();
+            System.out.println("removed potion satchel " + potionName);
+            addPotion(username, potionName, potency, effect);
+            
+        } catch (Exception e) {
+            System.out.println("Failed in removePotionSatchel");
+        }
     }
 
     public static void clearPotionSatchel(String username) throws SQLException{

@@ -21,7 +21,13 @@ public class Potions {
         String effect;
         Potion nextPotion;
 
-        // Constructor
+         /**
+         * Constructs a potion with the given name, potency, and effect.
+         *
+         * @param name the name of the potion
+         * @param potency the potency of the potion
+         * @param effect the effect of the potion
+         */
         public Potion(String name, int potency, String effect) {
             this.name = name;
             this.potency = potency;
@@ -29,6 +35,11 @@ public class Potions {
             this.nextPotion = null; // initialize nextPotion to null by default
         }
 
+        /**
+         * Constructs a potion with the given name, using values from the potions map.
+         *
+         * @param name the name of the potion
+         */
         public Potion(String name){
             this.name = name;
             Map<String, Potion> map = new Potions().getPotionsMap();
@@ -66,7 +77,12 @@ public class Potions {
             this.effect = effect;
         }
 
-        // Override toString() method for better output representation
+        
+        /**
+         * Overrides the toString() method to provide a better representation of the potion.
+         *
+         * @return a string representation of the potion
+         */
         @Override
         public String toString() {
             return "Potion{" +
@@ -76,16 +92,22 @@ public class Potions {
                     '}';
         }
     }
-
+    
+    /** A map containing all potions. */
     public Map<String, Potion> potionsMap;
 
-    // Constructor
+    
+    /**
+     * Constructs a Potions object and initializes the potions map.
+     */
     public Potions() {
         potionsMap = new TreeMap<>();
         initializePotions();
     }
 
-    // Method to initialize potions
+    /**
+     * Initializes the potions and adds them to the potions map.
+     */
     public void initializePotions() {
                
         // 15 types of potions
@@ -153,6 +175,11 @@ public class Potions {
                
     }
 
+    /**
+     * Gets the sorted potions map.
+     *
+     * @return the sorted potions map
+     */
     public TreeMap<String, Potion> getSortedPotionMap(){
         int index = 1;
        
@@ -169,7 +196,11 @@ public class Potions {
        return sortedPotionsMap;
     }
 
-    // Method to get potions map
+    /**
+     * Gets the potions map.
+     *
+     * @return the potions map
+     */
     public Map<String, Potion> getPotionsMap() {
         return potionsMap;
     }

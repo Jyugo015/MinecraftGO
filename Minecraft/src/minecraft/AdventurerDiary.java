@@ -23,12 +23,24 @@ class AdventurerDiary {
     private int entryCounter;
     public static String user;
 
+    /**
+     * Constructs an AdventurerDiary with the specified username and initializes the diary entries.
+     *
+     * @param username the username of the adventurer
+     * @throws SQLException if there is an error retrieving entries from the database
+     */
     public AdventurerDiary(String username) throws SQLException {
         user = username;
         this.entries = database_item8.retrieveEntries(user);
         this.entryCounter = entries.size() + 1;
     }
 
+     /**
+     * Logs an event in the diary with the current timestamp.
+     *
+     * @param eventDescription a description of the event
+     * @throws SQLException if there is an error adding the entry to the database
+     */
     public void logEvent(String eventDescription) throws SQLException {
         LocalDateTime timestamp = LocalDateTime.now();
         String formattedTimestamp = timestamp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -38,6 +50,9 @@ class AdventurerDiary {
         System.out.println("Event logged: " + entry);
     }
 
+    /**
+     * Displays all entries in the adventurer's diary.
+     */
     public void displayEntries() {
         System.out.println("Adventurer's Diary Entries:");
         for (Map.Entry<Integer, String> entry : this.entries.entrySet()) {
@@ -47,14 +62,27 @@ class AdventurerDiary {
         }
     }
 
+    
     public Map<Integer, String> getEntries() {
         return entries;
     }
 
+    /**
+     * Retrieves a specific entry from the diary.
+     *
+     * @param entryNumber the number of the entry to retrieve
+     * @return the entry with the specified number, or "Invalid entry number" if not found
+     */
     public String shareEntry(int entryNumber) {
         return entries.getOrDefault(entryNumber, "Invalid entry number");
     }
 
+    
+    /**
+     * Allows the adventurer to share one or more diary entries with others.
+     *
+     * @param toShare a list of entries to share
+     */
     public void shareEvent(ArrayList<String> toShare) {
         Scanner scanner = new Scanner(System.in);
         boolean continueSharing = true;
@@ -93,6 +121,10 @@ class AdventurerDiary {
         }
     }
     
+     /**
+     * Searches for diary entries containing a specific keyword.
+     */
+ 
     public void searchEvent() {
         Scanner scanner = new Scanner(System.in);
         boolean searchAgain = true;
@@ -129,6 +161,10 @@ class AdventurerDiary {
         }
     }
 
+    
+    /**
+     * Verifies all events in the diary.
+     */
     public void verifyAllEvents() {
         System.out.println("Verifying all events:");
         for (String entry : this.entries.values()) {
@@ -141,6 +177,11 @@ class AdventurerDiary {
         }
     }
 
+    /**
+     * Verifies a specific event in the diary.
+     *
+     * @param eventDescription the description of the event to verify
+     */
     public void verifyEvent(String eventDescription) {
         boolean found = false;
         for (String entry : this.entries.values()) {

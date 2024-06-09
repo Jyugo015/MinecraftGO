@@ -58,17 +58,17 @@ public class LoginController implements Initializable {
         clearErrors();
 
         if (username.isEmpty()) {
-            usernameError.setText("Username cannot be empty");
+            usernameError.setText("Username cannot be empty.");
             hasError = true;
         }
 
         if (password.isEmpty()) {
-            passwordError.setText("Password cannot be empty");
+            passwordError.setText("Password cannot be empty.");
             hasError = true;
         }
 
         if (email.isEmpty()) {
-            emailError.setText("Email cannot be empty");
+            emailError.setText("Email cannot be empty.");
             hasError = true;
         } else if (!isValidEmail(email)) {
             emailError.setText("Invalid Email");
@@ -100,6 +100,7 @@ public class LoginController implements Initializable {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
             Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("minecraft-style.css").toExternalForm());
             Stage stage = new Stage();
             stage.setTitle("Minecraft");
             stage.setScene(scene);

@@ -32,25 +32,25 @@
               <VBox alignment="CENTER" layoutX="28.0" layoutY="28.0" prefHeight="147.0" prefWidth="202.0" spacing="3.0" style="-fx-spacing: -1;">
                   <children>
                       <TextField fx:id="usernameField" promptText="Username" styleClass="text-body" stylesheets="@minecraft-style.css" />
-                      <Label fx:id="usernameError" prefHeight="11.0" prefWidth="204.0" textFill="red">
+                      <Label fx:id="usernameError" prefHeight="11.0" prefWidth="204.0" styleClass="text-custom" stylesheets="@minecraft-style.css" textFill="red">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Label>
                       <TextField fx:id="emailField" promptText="Email" styleClass="text-body" stylesheets="@minecraft-style.css" />
-                      <Label fx:id="emailError" prefHeight="15.0" prefWidth="208.0" textFill="red">
+                      <Label fx:id="emailError" prefHeight="15.0" prefWidth="208.0" styleClass="text-custom" stylesheets="@minecraft-style.css" textFill="red">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Label>
                       <PasswordField fx:id="passwordField" promptText="Password" styleClass="text-body" stylesheets="@minecraft-style.css" />
-                      <Label fx:id="passwordError" prefHeight="15.0" prefWidth="202.0" textFill="red">
+                      <Label fx:id="passwordError" prefHeight="15.0" prefWidth="202.0" styleClass="text-custom" stylesheets="@minecraft-style.css" textFill="red">
                      <font>
                         <Font size="10.0" />
                      </font>
                   </Label>
                       <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password" styleClass="text-body" stylesheets="@minecraft-style.css" />
-                      <Label fx:id="confirmPasswordError" prefHeight="15.0" prefWidth="201.0" textFill="red">
+                      <Label fx:id="confirmPasswordError" prefHeight="15.0" prefWidth="201.0" styleClass="text-custom" stylesheets="@minecraft-style.css" textFill="red">
                      <font>
                         <Font size="10.0" />
                      </font>

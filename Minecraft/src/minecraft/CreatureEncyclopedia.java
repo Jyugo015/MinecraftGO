@@ -20,7 +20,11 @@ public class CreatureEncyclopedia {
     public Hashtable<String, Creature> encyclopedia; 
     public static String username;
 
-    // Method to search for creatures based on a search term
+    /**
+     * Searches for creatures based on a search term and displays their information.
+     *
+     * @param searchTerm the term to search for
+     */
     public void searchCreatures(String searchTerm) {
         boolean found = false;
         for (String creatureName : encyclopedia.keySet()) {
@@ -56,8 +60,14 @@ public class CreatureEncyclopedia {
             System.out.println("No results found for '" + searchTerm + "'.");
         }
     }
-    
-     // Method to filter creatures by type
+
+     
+    /**
+     * Filters creatures by type.
+     *
+     * @param type the type of creatures to filter
+     * @return a list of creatures of the specified type
+     */
     public List<Creature> filterByType(String type) {
         List<Creature> filteredCreatures = new ArrayList<>();
         for (Creature creature : encyclopedia.values()) {
@@ -68,20 +78,35 @@ public class CreatureEncyclopedia {
         return filteredCreatures;
     }
 
-    // Method to sort creatures alphabetically by name (A-Z)
+      
+     /**
+     * Sorts creatures alphabetically by name (A-Z).
+     *
+     * @return a list of creatures sorted alphabetically by name
+     */
     public List<Creature> sortCreaturesAZ() {
         List<Creature> sortedCreatures = new ArrayList<>(encyclopedia.values());
         Collections.sort(sortedCreatures, Comparator.comparing(Creature::getSpecies));
         return sortedCreatures;
     }
 
-    // Method to sort creatures alphabetically by name (Z-A)
+    
+    /**
+     * Sorts creatures alphabetically by name (Z-A).
+     *
+     * @return a list of creatures sorted alphabetically by name in reverse order
+     */
     public List<Creature> sortCreaturesZA() {
         List<Creature> sortedCreatures = sortCreaturesAZ();
         Collections.reverse(sortedCreatures);
         return sortedCreatures;
     }
     
+    /**
+     * Sorts creatures alphabetically by name (Z-A).
+     *
+     * @return a list of creatures sorted alphabetically by name in reverse order
+     */
     public static boolean askToSearchAgain(Scanner scanner) {
         System.out.println("\nDo you want to search again? (yes/no)");
         String choice = scanner.nextLine().toLowerCase();
@@ -89,16 +114,35 @@ public class CreatureEncyclopedia {
     }
 
 
+    /**
+     * Constructs a CreatureEncyclopedia and initializes the encyclopedia from the database.
+     *
+     * @throws SQLException if there is an error retrieving the encyclopedia from the database
+     */
     public CreatureEncyclopedia() throws SQLException {
         // encyclopedia = new Hashtable<>();
         System.out.println("testing");
         this.encyclopedia = database_item9.retrieveEncyclopedia();
     }
 
+    
+    /**
+     * Retrieves information about a creature.
+     *
+     * @param creatureName the name of the creature
+     * @return the creature information, or a default creature if not found
+     */
     public Creature getCreatureInfo(String creatureName) {
         return encyclopedia.getOrDefault(creatureName, new Creature("", "", "", "", "", "", "", new ArrayList<String>()));
     }
 
+     /**
+     * Adds a note to a creature's community contributions.
+     *
+     * @param creatureName the name of the creature
+     * @param note the note to add
+     * @throws SQLException if there is an error adding the note to the database
+     */
     public void addNoteToCreature(String creatureName, String note) throws SQLException {
         Creature creature = encyclopedia.get(creatureName);
         if (creature != null) {
@@ -111,6 +155,9 @@ public class CreatureEncyclopedia {
 
     }
     
+    /**
+     * Represents a creature with various attributes.
+     */
     public static class Creature {
         private String type;
         private String species;

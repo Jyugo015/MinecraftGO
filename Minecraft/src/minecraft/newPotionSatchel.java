@@ -173,46 +173,31 @@ public class newPotionSatchel extends Potions{
     }
     
     public void useFirstPotionAutomatically(PotionSatchelController controller) throws SQLException, InterruptedException {
-        // Timer timer = new Timer();
-        // timer.schedule(new TimerTask() {
-            // @Override
-            // public void run() {
-                newPotionSatchel satchel = controller.getPotionSatchel();
-                List<Potion> selectedPotions = controller.getSelectedPotions();
-                int totalPotionsAdded = controller.getTotalPotionsAdded();
-                if (satchel.getHead() != null) {
-                    System.out.println("\nUsing potion automatically: " + satchel.getHead().getName());
-                    // Remove the used potion from the satchel
-                    database_item3.removePotionSatchel("defaultUser", satchel.getHead().getName(), 
-                                                satchel.getHead().getPotency(), satchel.getHead().getEffect());
-                    database_item3.removePotion("defaultUser", satchel.getHead().getName());
-                    
-                    if (size == 0) {
-                        System.out.println("\nNo more potions in the satchel. Automatic usage stopped.");
-                        // timer.cancel();
-                    }
-                    Thread.sleep(5000);
-                    Platform.runLater(() -> {
-                        try {
-                            controller.potionBag.remove(satchel.getHead().getName());
-                            selectedPotions.stream().filter(e->satchel.getHead().getName().equals(e.getName()))
-                                                    .findFirst().ifPresent(e->selectedPotions.remove(e));
-                            satchel.head = satchel.head.nextPotion;
-                            satchel.size--;
-                            controller.setTotalPotionsAdded(satchel.getSize());
-                            controller.updateSelectedPotionsGrid();
-                            controller.populatePotionGrid();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    });
-                } 
-                // else {
-                //     System.out.println("\nNo more potions in the satchel.");
-                    // timer.cancel();
-                // }
-            // }
-        // }, 0, 15000); // 15 seconds interval
+        newPotionSatchel satchel = controller.getPotionSatchel();
+        List<Potion> selectedPotions = controller.getSelectedPotions();
+        if (satchel.getHead() != null) {
+            System.out.println("\nUsing potion automatically: " + satchel.getHead().getName());
+            database_item3.removePotionSatchel("defaultUser", satchel.getHead().getName(),
+                    satchel.getHead().getPotency(), satchel.getHead().getEffect());
+            database_item3.removePotion("defaultUser", satchel.getHead().getName());
+
+            Platform.runLater(() -> {
+                try {
+                    controller.potionBag.remove(satchel.getHead().getName());
+                    selectedPotions.stream().filter(e -> satchel.getHead().getName().equals(e.getName()))
+                            .findFirst().ifPresent(e -> selectedPotions.remove(e));
+                    satchel.head = satchel.head.nextPotion;
+                    satchel.size--;
+                    controller.setTotalPotionsAdded(satchel.getSize());
+                    controller.updateSelectedPotionsGrid();
+                    controller.populatePotionGrid();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        } else {
+            System.out.println("\nNo more potions in the satchel.");
+        }
     }
     
     //method to clear all potion in the satchel

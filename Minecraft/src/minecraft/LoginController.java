@@ -79,7 +79,6 @@ public class LoginController implements Initializable {
             return;
         }
        
-        //这里database拿user email,我那个hashmap全部可以换掉
         User user = database_user.getUserByEmail(email);
 
         if (user == null) {
@@ -87,7 +86,7 @@ public class LoginController implements Initializable {
             return;
         }
         
-        //password hashing,我们看不到user的密码的(databse存这个，不要存normal password)
+        //password hashing, administrator cannot really get to know the password of user
         String hashedPassword = PasswordHash.hashPassword(password);
 
         if (!user.getUsername().equals(username) || !user.getHashedPassword().equals(hashedPassword)) {

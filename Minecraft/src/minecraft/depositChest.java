@@ -142,15 +142,12 @@ public class depositChest  implements Initializable{
         dialog.getDialogPane().getStylesheets().add(cssFilePath);
         dialog.getDialogPane().getStyleClass().add("dialog-pane");
         
-        // 设置按钮
         ButtonType okButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
 
-        // Apply styles to the actual buttons
         dialog.getDialogPane().lookupButton(okButtonType).getStyleClass().add("button");
         dialog.getDialogPane().lookupButton(ButtonType.CANCEL).getStyleClass().add("button");
         
-        // 创建一个输入区域
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);

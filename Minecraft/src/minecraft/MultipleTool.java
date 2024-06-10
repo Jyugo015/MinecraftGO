@@ -18,6 +18,9 @@ public class MultipleTool extends MultitoolGUIController{
     private Node tail;
     private int size;
 
+    //this will cause infinite loop because this constructor is calling the 
+    //multitoolGUIController constructor but the multitoolGUIController constructor is calling 
+    //the Multitool constructor also
     // public MultipleTool() {
     //     this.head = null;
     //     this.tail = null;

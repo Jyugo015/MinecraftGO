@@ -193,7 +193,6 @@ public class EnderBackpackController implements Initializable{
         dialog.getDialogPane().getStylesheets().add(cssFilePath);
         dialog.getDialogPane().getStyleClass().add("dialog-pane");
 
-        // 设置按钮
         ButtonType okButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
         dialog.getDialogPane().lookupButton(okButtonType).setDisable(true);
@@ -201,7 +200,6 @@ public class EnderBackpackController implements Initializable{
         dialog.getDialogPane().lookupButton(okButtonType).getStyleClass().add("button");
         dialog.getDialogPane().lookupButton(ButtonType.CANCEL).getStyleClass().add("button");
         
-        // 创建一个输入区域
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -332,7 +330,6 @@ public class EnderBackpackController implements Initializable{
         dialog.getDialogPane().getStylesheets().add(cssFilePath);
         dialog.getDialogPane().getStyleClass().add("dialog-pane");
 
-        // 设置按钮
         ButtonType okButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
 
@@ -341,7 +338,6 @@ public class EnderBackpackController implements Initializable{
         dialog.getDialogPane().lookupButton(okButtonType).getStyleClass().add("button");
         dialog.getDialogPane().lookupButton(ButtonType.CANCEL).getStyleClass().add("button");
         
-        // 创建一个输入区域
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -422,7 +418,6 @@ public class EnderBackpackController implements Initializable{
         dialog.getDialogPane().getStylesheets().add(cssFilePath);
         dialog.getDialogPane().getStyleClass().add("dialog-pane");
 
-        // 设置按钮
         ButtonType okButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
 
@@ -431,7 +426,6 @@ public class EnderBackpackController implements Initializable{
         dialog.getDialogPane().lookupButton(okButtonType).getStyleClass().add("button");
         dialog.getDialogPane().lookupButton(ButtonType.CANCEL).getStyleClass().add("button");
        
-        // 创建一个输入区域
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -448,7 +442,6 @@ public class EnderBackpackController implements Initializable{
 
         dialog.getDialogPane().setContent(grid);
 
-        // 请求焦点
         Platform.runLater(capacityField::requestFocus);
 
         // Add a listener to the text property of the TextField
@@ -473,7 +466,6 @@ public class EnderBackpackController implements Initializable{
             }
         });
 
-        // 结果转换
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == okButtonType) {
                 try {
@@ -494,8 +486,8 @@ public class EnderBackpackController implements Initializable{
                 backpack.reduceCapacity(capacityReduction);
             } catch (SQLException e) {
                 e.printStackTrace();
-            } // 减少最大容量
-            updateDisplay();  // 更新界面
+            } 
+            updateDisplay();  
             updateIncreaseCapacityButton();
             updateReduceCapacityButton();
         });

@@ -2,7 +2,7 @@ package minecraft;
 
 import java.sql.SQLException;
 
-public class Crop {
+public class Crop extends AutofarmerblockController{
     private String name;
     private Tool toolNeeded;
     private int quantityCrop, quantitySeed, numGrowthStages, minSeedYield, maxSeedYield, 
@@ -28,14 +28,14 @@ public class Crop {
     }
 
     public void setSpecification(String name) throws SQLException{
-        this.quantityCrop = database_item6.retrieveQuantityCrop("defaultUser", name);
-        this.quantitySeed = database_item6.retrieveQuantitySeed("defaultUser", name);
-        this.toolNeeded = database_item6.retrievetoolNeeded("defaultUser", name);
-        this.numGrowthStages = database_item6.retrievenumGrowthStages("defaultUser", name);
-        this.minSeedYield = database_item6.retrieveminSeedYield("defaultUser", name);
-        this.maxSeedYield = database_item6.retrievemaxSeedYield("defaultUser", name);
-        this.minCropYield = database_item6.retrieveminCropYield("defaultUser", name);
-        this.maxCropYield = database_item6.retrievemaxCropYield("defaultUser", name);
+        this.quantityCrop = database_item6.retrieveQuantityCrop(username, name);
+        this.quantitySeed = database_item6.retrieveQuantitySeed(username, name);
+        this.toolNeeded = database_item6.retrievetoolNeeded(username, name);
+        this.numGrowthStages = database_item6.retrievenumGrowthStages(username, name);
+        this.minSeedYield = database_item6.retrieveminSeedYield(username, name);
+        this.maxSeedYield = database_item6.retrievemaxSeedYield(username, name);
+        this.minCropYield = database_item6.retrieveminCropYield(username, name);
+        this.maxCropYield = database_item6.retrievemaxCropYield(username, name);
     }
 
     public String getName() {

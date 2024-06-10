@@ -17,7 +17,7 @@ public class database_item8 {
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/minecraft";
         String username = "root";
-        String password = "urpw";
+        String password = "dbqLb1234!";
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
@@ -33,6 +33,11 @@ public class database_item8 {
         diary.logEvent("Achievement earned: DIAMONDS!");
         diary.logEvent("Discovered a village");
         diary.logEvent("Completed the Ender Dragon challenge");
+    }
+
+    public static void initializeSignup (String username) throws SQLException{
+        AdventurerDiary diary = new AdventurerDiary(username);
+        diary.logEvent("Player joined the game");
     }
 
     public static Map<Integer, String> retrieveEntries(String username) throws SQLException {

@@ -21,8 +21,8 @@ public class Task {
         this.cropUsed = cropUsed;
         this.growthStage = growthStage;
         this.status = 0;
-        if (this.task.equals("Planting")||this.task.equals("Watering")||this.task.equals("Applying")
-            ||this.task.equals("Harvesting"))
+        if (this.task.equals("Planting")||this.task.equals("Watering")
+            ||this.task.equals("Applying")||this.task.equals("Harvesting"))
             this.duration = 40000;
         else 
             this.duration = 100000;
@@ -85,6 +85,8 @@ public class Task {
     }
 
     public String toString(){
-        return "\u25CF " + this.task + " " + this.getCropUsed().getName() + " Growth Stage: " + String.valueOf(this.getGrowthStage());
+        return "\u25CF " + String.format("%-30s", this.task + " " + this.getCropUsed().getName()) 
+                + String.format("%20s", " ") + "Growth Stage: " 
+                + String.valueOf(this.getGrowthStage());
     }
 }

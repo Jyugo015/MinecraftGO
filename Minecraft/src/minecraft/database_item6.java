@@ -32,7 +32,7 @@ public class database_item6 {
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/minecraft";
         String username = "root";
-        String password = "urpw";
+        String password = "dbqLb1234!";
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
@@ -366,9 +366,7 @@ public class database_item6 {
             insert.setInt(10, maxCropYield);
             insert.executeUpdate();
         }
-        System.out.println("item6addcrop"+database_itemBox.retrieveQuantity(cropName,"defaultUser"));
         database_itemBox.addItem(username, cropName, cropQuantityToAdd);
-        System.out.println("item6addcrop"+database_itemBox.retrieveQuantity(cropName,"defaultUser"));
         connection.close();
     }
 

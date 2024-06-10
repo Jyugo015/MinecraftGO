@@ -43,7 +43,7 @@ import java.util.List;
  * @author Asus
  */
 
-public class EnderBackpackController extends database_item1 implements Initializable{
+public class EnderBackpackController implements Initializable{
 
     @FXML
     private ScrollPane scrollbackpack;
@@ -68,14 +68,14 @@ public class EnderBackpackController extends database_item1 implements Initializ
     private ObservableList<String> items = FXCollections.observableArrayList();
     public static EnderBackpackImplementation backpack;
     public static ItemBox box;
-    private static String username;//=LoginPageController.username    
+    public static String username;//=LoginPageController.username    
     ArrayList<String> retrieve;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            backpack = new EnderBackpackImplementation("defaultUser");
-            box = new ItemBox("defaultUser");
+            backpack = new EnderBackpackImplementation(username);
+            box = new ItemBox(username);
         } catch (SQLException e) {
             e.printStackTrace();
         } 
@@ -170,7 +170,6 @@ public class EnderBackpackController extends database_item1 implements Initializ
                 button.setOnAction(e -> selectItem(item));
             }
         }
-        updateIncreaseCapacityButton();
     }
 
     private void selectItem(EnderBackpackItem item) {
@@ -271,14 +270,14 @@ public class EnderBackpackController extends database_item1 implements Initializ
                 updateIncreaseCapacityButton();
                 updateReduceCapacityButton();
                 box.addItem(item.getName(), quantitytoremove);
-                database_item1.removeItem(item.getName(), "defaultUser", quantitytoremove);
-                database_itemBox.addItem("defaultUser", item.getName(), quantitytoremove);
+                database_item1.removeItem(item.getName(), username, quantitytoremove);
+                database_itemBox.addItem(username, item.getName(), quantitytoremove);
                 if (item.getType().equals("Potion")){
                     Potions potions = new Potions();
                     potions.getPotionsMap().entrySet().stream().filter(entry->entry.getKey()
                                          .equals(item.getName())).findFirst().ifPresent(entry->{
                         try {
-                            database_item3.addPotion("defaultUser", item.getName(), 
+                            database_item3.addPotion(username, item.getName(), 
                                                         entry.getValue().getPotency(), 
                                                         entry.getValue().getEffect());
                         } catch (SQLException e) {
@@ -291,7 +290,7 @@ public class EnderBackpackController extends database_item1 implements Initializ
                     for (String cropname:crop){
                         if (cropname.equals(item.getName())){
                             Crop cropToAdd = new Crop(item.getName());
-                            database_item6.addCrop("defaultUser", cropToAdd, quantitytoremove);
+                            database_item6.addCrop(username, cropToAdd, quantitytoremove);
                         }
                     }
                 }

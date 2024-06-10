@@ -59,10 +59,8 @@ public class AddItemBackpack extends EnderBackpackController implements Initiali
         gridItemBox.getChildren().clear();
         int rowCount=0;
         colCount =0;
-        System.out.println(box.list.size());
-        
         for (int i=0;i<box.list.size();i++) {
-            if (box.list.get(i).quantity!=0){            
+            if (box.list.get(i).quantity!=0){          
                 VBox itemVBox = new VBox(-7);
                 ImageView imageView = new ImageView(new Image(getClass()
                                                 .getResourceAsStream("/minecraft/icon/" + 
@@ -221,16 +219,16 @@ public class AddItemBackpack extends EnderBackpackController implements Initiali
             box.removeItem(item, quantitytoadd);
             display();
             try {
-                database_itemBox.removeItem(item.getName(), "defaultUser", quantitytoadd);
-                database_item1.addItem("defaultUser", item.getName(), quantitytoadd);
+                database_itemBox.removeItem(item.getName(), username, quantitytoadd);
+                database_item1.addItem(username, item.getName(), quantitytoadd);
                 if (item.getType().equals("Potion"))
-                    database_item3.removePotion("defaultUser", item.getName());
+                    database_item3.removePotion(username, item.getName());
                     else if (item.getType().equals("Food")){
                         String[] crop = {"Carrot", "Wheat", "Potato", "Beetroot", "Melon Slice", "Pumpkin", "Sweet Berries"};
                         for (String cropname:crop){
                             if (cropname.equals(item.getName())){
                                 Crop cropToAdd = new Crop(item.getName());
-                                database_item6.removeCrop("defaultUser", cropToAdd.getName(), quantitytoadd);
+                                database_item6.removeCrop(username, cropToAdd.getName(), quantitytoadd);
                             }
                         }
                     }

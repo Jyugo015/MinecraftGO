@@ -98,6 +98,13 @@ public class LoginController implements Initializable {
         System.out.println("User logged in: " + username + ", " + email);
         
         try {
+            EnderBackpackController.username = username;
+            MultitoolGUIController.username = username;
+            newPotionSatchel.username= username;
+            PotionSatchelController.username = username;
+            AutofarmerblockController.username = username;
+            SecureChestController.username = username;
+            AdventurerDiaryController.username= username;
             Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("minecraft-style.css").toExternalForm());
@@ -123,7 +130,7 @@ public class LoginController implements Initializable {
     }
 
     private boolean isValidEmail(String email) {
-        return email.contains("@") && email.endsWith(".com");
+        return email.contains("@") && (email.endsWith(".com")||email.endsWith(".my"));
     }
 
      private void clearErrors() {

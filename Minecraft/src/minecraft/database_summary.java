@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class database_summary {
-
-    public static String username = "defaultUser";
     //initialize itemBox(potion based on potion, food based on crop, and + xy eh), item1, item3(potion),
     // item6(crop), item7, item8, item9
 
@@ -18,30 +16,63 @@ public class database_summary {
     //each functionality
     public static void main(String[] args) throws SQLException {
         resetAll();
-
         demonstrate();
     }
 
     public static void demonstrate() throws SQLException {
         createTable();
-        initializeItemBox();
-        database_user.addUser(new User(username, "jiaqitan1006@gmail.com",
-                PasswordHash.hashPassword("MinecraftGO")));
-        database_item1.initialize(username);
-        database_item2.initialize(username);
-        database_item3.initialize(username);
-        database_item6.initialize(username);
+        initializeItemBox("defaultUser");
+        database_user.addUser(new User("defaultUser", "jiaqitan1006@gmail.com",
+                                PasswordHash.hashPassword("MinecraftGO")));
+        database_user.addUser(new User("defaultUser2", "qijia3456@gmail.com", 
+                                PasswordHash.hashPassword("MinecraftGo2")));
+        database_user.addUser(new User("defaultUser3", "jqitan1006@gmail.com", 
+                                PasswordHash.hashPassword("MinecraftGo3")));
+        database_user.addUser(new User("defaultUser4", "23005001@siswa.um.edu.my", 
+                                PasswordHash.hashPassword("MinecraftGo4")));
+        database_user.addUser(new User("defaultUser5", "tanweiru2004@gmail.com", 
+                                PasswordHash.hashPassword("MinecraftGo5")));
+        database_user.addUser(new User("defaultUser6", "elysiayungsx@gmail.com", 
+                                PasswordHash.hashPassword("MinecraftGo6")));
+        database_user.addUser(new User("defaultUser7", "yewoonlim30@gmail.com", 
+                                PasswordHash.hashPassword("MinecraftGo7")));
+        database_user.addUser(new User("defaultUser8", "lxying0114@gmail.com", 
+                                PasswordHash.hashPassword("MinecraftGo8")));
+        database_item1.initialize("defaultUser");
+        database_item1.initialize("defaultUser2");
+        database_item1.initialize("defaultUser3");
+        database_item1.initialize("defaultUser4");
+        database_item1.initialize("defaultUser5");
+        database_item1.initialize("defaultUser6");
+        database_item1.initialize("defaultUser7");
+        database_item1.initialize("defaultUser8");
+        database_item2.initialize("defaultUser");
+        database_item3.initialize("defaultUser");
+        database_item6.initialize("defaultUser");
         database_item7.testing();
-        database_item8.initialize(username);
+        database_item8.initialize("defaultUser");
+        database_item8.initializeSignup("defaultUser2");
+        database_item8.initializeSignup("defaultUser3");
+        database_item8.initializeSignup("defaultUser4");
+        database_item8.initializeSignup("defaultUser5");
+        database_item8.initializeSignup("defaultUser6");
+        database_item8.initializeSignup("defaultUser7");
+        database_item8.initializeSignup("defaultUser8");
         database_item9.initialize();
         initializeTeleportationPoint();
+    }
+
+    public static void initializeSignup(String username) throws SQLException{
+        database_item1.initialize(username);
+        database_item7.initialize(username);
+        database_item8.initializeSignup(username);
     }
 
     public static Connection getConnection() throws SQLException {
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/minecraft";
         String username = "root";
-        String password = "urpw";
+        String password = "dbqLb1234!";
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
@@ -181,26 +212,24 @@ public class database_summary {
     }
 
     public static void initializeTeleportationPoint() throws SQLException {
-            TeleportationNetworkController.Point n1 =  new TeleportationNetworkController.Point("A", "defaultUser", 50,60,null,null,null);
-            TeleportationNetworkController.Point n2 =  new TeleportationNetworkController.Point("B", "user1", 200, 100,null,null,null);
-            TeleportationNetworkController.Point n3 =  new TeleportationNetworkController.Point("C", "user2", 400, 50,null,null,null);
-            TeleportationNetworkController.Point n4 =  new TeleportationNetworkController.Point("D", "user3", 300, 300,null,null,null);
-            TeleportationNetworkController.Point[] points = {n1,n2,n3,n4};
-            for (TeleportationNetworkController.Point p : points) {
+        TeleportationNetworkController.Point n1 =  new TeleportationNetworkController.Point("A", "defaultUser", 50,60,null,null,null);
+        TeleportationNetworkController.Point n2 =  new TeleportationNetworkController.Point("B", "user1", 200, 100,null,null,null);
+        TeleportationNetworkController.Point n3 =  new TeleportationNetworkController.Point("C", "user2", 400, 50,null,null,null);
+        TeleportationNetworkController.Point n4 =  new TeleportationNetworkController.Point("D", "user3", 300, 300,null,null,null);
+        TeleportationNetworkController.Point[] points = {n1,n2,n3,n4};
+        for (TeleportationNetworkController.Point p : points) {
                 TeleportationNetworkController.addNewNode(p.getNameOfTeleportationPoint(),p.getOwner(), p.getX(), p.getY(), p.getNeighbours(), p.getFriendRequestsReceived(), p.getFriendWaitingAcceptance());
-            }
-            n1.sendFriendRequest("B");
-            n3.sendFriendRequest("B");
-            n4.sendFriendRequest("B");
-            n2.acceptFriendRequest("A");
-            n2.acceptFriendRequest("C");
-            n2.acceptFriendRequest("D");
+        }
+        n1.sendFriendRequest("B");
+        n3.sendFriendRequest("B");
+        n4.sendFriendRequest("B");
+        n2.acceptFriendRequest("A");
+        n2.acceptFriendRequest("C");
+        n2.acceptFriendRequest("D");
     }
 
-    public static void initializeItemBox() throws SQLException {
+    public static void initializeItemBox(String username) throws SQLException {
         // database_itemBox.addItem(String username, String itemname, String type, String function, int quantitytoadd)
-        //Tool
-        //for tool need to add to the toollist table oso 
         database_itemBox.addItem(username, "Blaze Rod", "Weapon", "Act as a fuel for both brewing and smelting", 15);
         database_itemBox.addItem(username, "Bread", "Food", "To be eaten as food or breed Villagers and level up Composters", 15);
         database_itemBox.addItem(username, "Arrow of Slow Falling", "Arrow", "To allow the player to jump across a gap of 5 blocks (6 blocks with enough momentum), compared to 4 (5 blocks with enough momentum) blocks normally", 15);
@@ -214,7 +243,6 @@ public class database_summary {
         database_itemBox.addItem(username, "Minecart", "Transportation", "To allow players to travel in them", 15);
         database_itemBox.addItem(username, "Arrow of Fire Resistance", "Arrow", "To grant immunity to damage from fire, blaze fireballs, fire charges, magma blocks, and lava", 15);
         database_itemBox.addItem(username, "Hoe", "Tool", "To turn dirt, grass blocks, and dirt paths into farmland", 15);
-        database_itemBox.addItem(username, "Bucket of Water", "Tool", "A bucket to carry water", 15);
         database_itemBox.addItem(username, "Dye Lime", "Dye", "To apply a lime color to objects", 15);
         database_itemBox.addItem(username, "Arrow of Harming", "Arrow", "To shot players or mobs to give instant damage effect and immediately suffer damage to their health", 15);
         database_itemBox.addItem(username, "Dye Orange", "Dye", "To apply an orange color to objects", 15);
@@ -261,7 +289,6 @@ public class database_summary {
         database_itemBox.addItem(username, "Dye Purple", "Dye", "To apply a purple color to objects", 15);
         database_itemBox.addItem(username, "Raw Mutton", "Food", "To breed and heal tamed wolves, lead them around, and make baby tamed wolves grow up faster by 10% of the remaining time", 15);
         database_itemBox.addItem(username, "Boots", "Armor", "To safely cross powder snow without sinking in it", 15);
-        database_itemBox.addItem(username, "Brick", "Material", "To craft brick blocks, flower pots, and decorated pots", 15);
         database_itemBox.addItem(username, "Dye Yellow", "Dye", "To apply a yellow color to objects", 15);
         database_itemBox.addItem(username, "Oak Wood", "Material", "To turn it all into planks for crafting", 15);
         database_itemBox.addItem(username, "Charcoal", "Material", "Used as fuel, or for crafting torches and campfires", 15);
@@ -269,10 +296,7 @@ public class database_summary {
         database_itemBox.addItem(username, "Dye Magenta", "Dye", "To apply a magenta color to objects", 15);
         database_itemBox.addItem(username, "Raw Beef", "Food", "To breed and heal tamed wolves, lead them around, and make baby tamed wolves grow up faster by 10% of the remaining time", 15);
         database_itemBox.addItem(username, "Arrow of Poisoned", "Arrow", "To poison any living creature that it hits", 15);
-        database_itemBox.addItem(username, "Clay", "Material", "To be smelted in a furnace to create clay bricks which can further be crafted into brick blocks;craft blocks of clay", 15);
         database_itemBox.addItem(username, "Strider Spawn Egg", "Mob Egg", "To instantly spawn a strider", 15);
-        database_itemBox.addItem(username, "Arrow of Slow Falling", "Arrow", "To allow the player to jump across a gap of 5 blocks (6 blocks with enough momentum), compared to 4 (5 blocks with enough momentum) blocks normally", 15);
-        database_itemBox.addItem(username, "Minecart", "Transportation", "To allow players to travel in them", 15);
         database_itemBox.addItem(username, "Bucket of Water", "Tool", "A bucket to carry water", 15);
         database_itemBox.addItem(username, "Music Disc Cat", "Record", "To play the song when inserted in a jukebox", 15);
         database_itemBox.addItem(username, "Bow", "Weapon", "To take on mobs at a distance, or where sword attacks could endanger a player", 15);
@@ -283,7 +307,6 @@ public class database_summary {
         database_itemBox.addItem(username, "Dye Blue", "Dye", "To apply a blue color to objects", 15);
         
         database_itemBox.removeItem("Carrot", username, 15);
-        System.out.println(database_itemBox.retrieveQuantity("Carrot", username));
         database_itemBox.removeItem("Beetroot", username, 15);
         database_itemBox.removeItem("Wheat", username, 15);
         database_itemBox.removeItem("Potato", username, 15);

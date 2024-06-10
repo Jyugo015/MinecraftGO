@@ -12,25 +12,23 @@ import java.util.List;
  *
  * @author Asus
  */
-public class MultipleTool {
+public class MultipleTool extends MultitoolGUIController{
 
     private Node head;
     private Node tail;
     private int size;
-    private String username = "defaultUser";//to be got from login page 
 
-    public MultipleTool() {
-        this.head = null;
-        this.tail = null;
-        this.size = 0;
-    }
+    // public MultipleTool() {
+    //     this.head = null;
+    //     this.tail = null;
+    //     this.size = 0;
+    // }
 
     public MultipleTool(String username) throws SQLException{
-        this.username= username;
         this.head = null;
         this.tail = null;
         this.size = 0;
-        List<Tool> toollist = database_item2.retrieveMultitool("defaultUser");
+        List<Tool> toollist = database_item2.retrieveMultitool(username);
         toollist.forEach(tool->this.addTool(tool));
     }
 

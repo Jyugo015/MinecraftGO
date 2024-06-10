@@ -10,7 +10,7 @@ import java.sql.SQLException;
  *
  * @author Asus
  */
-public class Tool{
+public class Tool extends MultitoolGUIController{
     private String name; 
     private String type; 
     private String function; 
@@ -45,7 +45,7 @@ public class Tool{
         this.name = toolname;
         this.type = database_itemBox.retrieveType(toolname);
         this.function = database_itemBox.retrieveFunction(toolname);
-        this.quantity = database_itemBox.retrieveQuantity(toolname, "defaultUser");
+        this.quantity = database_itemBox.retrieveQuantity(toolname, username);
     }
 
     public String getName() {

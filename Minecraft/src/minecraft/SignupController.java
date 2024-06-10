@@ -147,7 +147,7 @@ public class SignupController implements Initializable {
     }
 
     private boolean isValidEmail(String email) {
-        return email.contains("@") && email.endsWith(".com");
+        return email.contains("@") && (email.endsWith(".com")||email.endsWith(".my"));
     }
 
     private void clearErrors() {
@@ -156,7 +156,7 @@ public class SignupController implements Initializable {
         passwordError.setText("");
     }
     
-     public boolean verifyCode(String inputCode) {
+    public boolean verifyCode(String inputCode) {
         return verificationCode.equals(inputCode);
     }
 
@@ -164,7 +164,12 @@ public class SignupController implements Initializable {
         String hashedPassword = PasswordHash.hashPassword(password);
         User newUser = new User(username, email, hashedPassword);
         boolean userAdded = database_user.addUser(newUser);
-
+        try {
+            database_summary.initializeSignup(username);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
         if (userAdded) {
             System.out.println("User signed up: " + username + ", " + email);
             // Navigate back to login

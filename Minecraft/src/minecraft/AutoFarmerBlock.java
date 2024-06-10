@@ -13,7 +13,7 @@ import java.util.Map;
 import java.sql.SQLException;
 
 
-public class AutoFarmerBlock {
+public class AutoFarmerBlock extends AutofarmerblockController{
     private Queue<Task> taskManager;
     private Map<Crop, Integer> cropToPlant;
     ArrayList<Crop> cropInBox;
@@ -32,8 +32,8 @@ public class AutoFarmerBlock {
     //if resources needed is insufficient, print out suitable message
     /**
      * Add the selected crop and check the database whether the quantity of the seed and tool to plant is enough
-     * @param crop
-     * @param quantityToAdd
+     * @param crop the crop to add to the task schedule 
+     * @param quantityToAdd the quantity to add to the task schedule 
      * @return suitable message to display
      * @throws SQLException 
      */
@@ -41,12 +41,12 @@ public class AutoFarmerBlock {
         if (crop.checkSeed(quantityToAdd)){
             if (crop.getToolNeeded().getName().equals("None")
                 ||(!(crop.getToolNeeded().getName().equals("None"))
-                &&database_item6.checkTool("defaultUser", crop, quantityToAdd))){
+                &&database_item6.checkTool(username, crop, quantityToAdd))){
                 cropToPlant.put(crop, quantityToAdd);
-                database_item6.removeSeed("defaultUser", crop, quantityToAdd);
+                database_item6.removeSeed(username, crop, quantityToAdd);
                 crop.setQuantitySeed(crop.getQuantitySeed()-quantityToAdd);
-                if (!crop.getToolNeeded().getName().equals("null")){
-                    database_itemBox.removeItem("Axes", "defaultUser", quantityToAdd);
+                if (!crop.getToolNeeded().getName().equals("None")){
+                    database_itemBox.removeItem("Axes", username, quantityToAdd);
                 }
                 return "Crop successfully add to cart";
             }
@@ -64,27 +64,27 @@ public class AutoFarmerBlock {
             Crop crop = entryCrop.getKey();
             for (int i =0;i<entryCrop.getValue();i++){
                 taskManager.add(new Task("Planting", crop, 1));
-                database_item6.addTask("defaultUser", "Planting", crop.getName(), 
+                database_item6.addTask(username, "Planting", crop.getName(), 
                                         40000, 1, 0);
                 ((LinkedList<Task>) taskManager).getLast()
-                                                .setTaskID(database_item6.retrieveLastTaskID("defaultUser"));
+                                                .setTaskID(database_item6.retrieveLastTaskID(username));
                 for (int j=2;j<crop.getNumGrowthStages();j++){
                     taskManager.add(new Task("Watering", crop, j));
-                    database_item6.addTask("defaultUser","Watering", crop.getName(), 
+                    database_item6.addTask(username,"Watering", crop.getName(), 
                                         40000, j, 0);
                     ((LinkedList<Task>) taskManager).getLast()
-                                                    .setTaskID(database_item6.retrieveLastTaskID("defaultUser"));
+                                                    .setTaskID(database_item6.retrieveLastTaskID(username));
                     taskManager.add(new Task("Growth", crop, j));
-                    database_item6.addTask("defaultUser","Growth", crop.getName(), 
+                    database_item6.addTask(username,"Growth", crop.getName(), 
                                         100000, j, 0);
                     ((LinkedList<Task>) taskManager).getLast()
-                                                    .setTaskID(database_item6.retrieveLastTaskID("defaultUser"));
+                                                    .setTaskID(database_item6.retrieveLastTaskID(username));
                 }
                 taskManager.add(new Task("Harvesting", crop, crop.getNumGrowthStages()));
-                database_item6.addTask("defaultUser","Harvesting", crop.getName(), 
+                database_item6.addTask(username,"Harvesting", crop.getName(), 
                                         40000, crop.getNumGrowthStages(), 0);
                 ((LinkedList<Task>) taskManager).getLast()
-                                                .setTaskID(database_item6.retrieveLastTaskID("defaultUser"));
+                                                .setTaskID(database_item6.retrieveLastTaskID(username));
             }
         }
         cropToPlant.clear();
@@ -95,7 +95,7 @@ public class AutoFarmerBlock {
      * Add fertiliser if user checks the box
      * @param task task selected, and the applying fertiliser task will be added to the next
      * @param fertiliser Type of fertilisers: Bone meal, Super fertiliser
-     * @param controller
+     * @param controller the controller class instance that call the method 
      * @throws SQLException 
      */
     public void applyFertiliser(Task task, String fertiliser, AutofarmerblockController controller) throws SQLException{
@@ -109,10 +109,10 @@ public class AutoFarmerBlock {
                 Task apply = iterator.previous();
                 Task growthAfter = iterator.next();
                 growthAfter.setDuration(fertiliser);
-                database_item6.updateTask("defaultUser", growthAfter.getTask(), 
+                database_item6.updateTask(username, growthAfter.getTask(), 
                                             growthAfter.getCropUsed().getName(), growthAfter.getDuration(), 
                                             growthAfter.getStatus(), growthAfter.getTaskID());
-                database_item6.addTaskAfter("defaultUser", "Applying " + fertiliser, 
+                database_item6.addTaskAfter(username, "Applying " + fertiliser, 
                                             task.getCropUsed().getName(), 
                                             4000, task.getGrowthStage(), (float)0.0, 
                                             (float)(task.getTaskID()+0.5));
@@ -137,7 +137,7 @@ public class AutoFarmerBlock {
     
     /**
      * Run all the tasks in the taskManager
-     * @param controller
+     * @param controller the controller class instance that call the method 
      * @throws SQLException 
      */
     public void runTask(AutofarmerblockController controller) throws SQLException {
@@ -152,7 +152,7 @@ public class AutoFarmerBlock {
                 float status = statusAdd;
                 for (int i = duration - timeInterval; i>=0 ; i -= timeInterval, status += statusAdd){
                     Thread.sleep(timeInterval);
-                    database_item6.updateTask("defaultUser",taskToRun.getTask(),
+                    database_item6.updateTask(username,taskToRun.getTask(),
                                                 taskToRun.getCropUsed().getName(), 
                                                 i, status, taskToRun.getTaskID());
                     taskToRun.setDuration(i);
@@ -166,7 +166,7 @@ public class AutoFarmerBlock {
                         }
                     });
                 }
-                database_item6.removeTask("defaultUser",taskToRun.getTask(),
+                database_item6.removeTask(username,taskToRun.getTask(),
                                             taskToRun.getCropUsed().getName());
                 taskManager.poll();
                 Platform.runLater(()->{
@@ -193,7 +193,7 @@ public class AutoFarmerBlock {
                                             + cropUsed.getMinSeedYield();
                         System.out.println(numSeedYield + " seeds of " + cropUsed.getName() + " Harvested!");
                         message+= numSeedYield + " seeds of " + cropUsed.getName() + "\n";
-                        database_item6.addSeed("defaultUser", cropUsed, numSeedYield);
+                        database_item6.addSeed(username, cropUsed, numSeedYield);
                         cropUsed.setQuantitySeed(cropUsed.getQuantitySeed() + numSeedYield);
                     }
                     int numCropYield = (int)(Math.random() * 
@@ -201,7 +201,7 @@ public class AutoFarmerBlock {
                                     + cropUsed.getMinCropYield();
                     System.out.println(numCropYield + " crops of" + cropUsed.getName() + " Harvested!");
                     message+= numCropYield + " crops of " + cropUsed.getName();
-                    database_item6.addCrop("defaultUser", cropUsed, numCropYield);
+                    database_item6.addCrop(username, cropUsed, numCropYield);
                     cropUsed.setQuantityCrop(cropUsed.getQuantityCrop() + numCropYield);
                     final String finalMessage = message;
                     Platform.runLater(()->{

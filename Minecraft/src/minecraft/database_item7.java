@@ -13,18 +13,12 @@ import java.util.Map;
 
 public class database_item7 {
 
-    public static void main(String[] args) throws SQLException{
-        // initialize("defaultUser");
-        testing();
-        // deposit("defaultUser", "defaultUser", new EnderBackpackItem("Apple", "itemBox"), 1);
-    }
-
     //item secureChest
     public static Connection getConnection() throws SQLException{
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/minecraft";
         String username = "root";
-        String password = "urpw";
+        String password = "dbqLb1234!";
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
@@ -55,8 +49,23 @@ public class database_item7 {
         addItemManually("defaultUser2", "Trident", "Weapon", "To summon a lightning bolt if there is a thunderstorm", 4);
         addItemManually("defaultUser2", "Music Disc Far", "Record", "Play the song with the jukebox", 5);
         addItemManually("defaultUser3", "Map", "Tool", "To display any and all players in the world and their locations", 10);
-        addItemManually("defaultUser3", "Melon Slice", "Food", "To craft recipe of glistering melons; 50% chance to raise the compost level of new composter by 1;", 8);
+        addItemManually("defaultUser3", "Melon Slice", "Food", "To craft recipe of glistering melons; 50% chance to raise the compost level of new composter by 1", 8);
         addItemManually("defaultUser3", "Elytra", "Transportation", "Use arrows or fireworks as ammunition", 15);
+        addItemManually("defaultUser6", "Map", "Tool", "To display any and all players in the world and their locations", 12);
+        addItemManually("defaultUser6", "Melon Slice", "Food", "To craft recipe of glistering melons; 50% chance to raise the compost level of new composter by 1", 9);
+        addItemManually("defaultUser6", "Elytra", "Transportation", "Use arrows or fireworks as ammunition", 15);
+        addItemManually("defaultUser6", "Hoe", "Tool", "To turn dirt, grass blocks, and dirt paths into farmland", 13);
+        addItemManually("defaultUser6", "Swords", "Weapon", "To deal damage to entities or for breaking certain blocks faster than by hand", 7);
+        addItemManually("defaultUser6", "Redstone", "Material", "To carry power signals between items", 11);
+        addItemManually("defaultUser5", "Hoe", "Tool", "To turn dirt, grass blocks, and dirt paths into farmland", 13);
+        addItemManually("defaultUser5", "Swords", "Weapon", "To deal damage to entities or for breaking certain blocks faster than by hand", 7);
+        addItemManually("defaultUser5", "Redstone", "Material", "To carry power signals between items", 11);
+        addItemManually("defaultUser7", "Hoe", "Tool", "To turn dirt, grass blocks, and dirt paths into farmland", 13);
+        addItemManually("defaultUser7", "Swords", "Weapon", "To deal damage to entities or for breaking certain blocks faster than by hand", 7);
+        addItemManually("defaultUser7", "Redstone", "Material", "To carry power signals between items", 11);
+        addItemManually("defaultUser8", "Hoe", "Tool", "To turn dirt, grass blocks, and dirt paths into farmland", 13);
+        addItemManually("defaultUser8", "Swords", "Weapon", "To deal damage to entities or for breaking certain blocks faster than by hand", 7);
+        addItemManually("defaultUser8", "Redstone", "Material", "To carry power signals between items", 11);
     }
 
     public static void initialize(String username) throws SQLException{

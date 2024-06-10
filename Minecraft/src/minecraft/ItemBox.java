@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 public class ItemBox{
     public ArrayList<EnderBackpackItem> list = new ArrayList<EnderBackpackItem>();
-    public String username= "defaultUser";
 
     public ItemBox(String username) throws SQLException{
         ArrayList<String> itemNamelist = new ArrayList<String>();
@@ -15,7 +14,6 @@ public class ItemBox{
         for (int i=0;i<itemNamelist.size();i++){
             this.addItem(new EnderBackpackItem(itemNamelist.get(i), "itemBox"),0);
         }
-        this.username = username;
     }
     
     public void addItem(EnderBackpackItem item, int quantity){
@@ -34,7 +32,7 @@ public class ItemBox{
             }
         }
         this.addItem(new EnderBackpackItem(itemName, database_itemBox.retrieveType(itemName),
-        database_itemBox.retrieveFunction(itemName), quantity), 0);
+                     database_itemBox.retrieveFunction(itemName), quantity), 0);
     }
 
     // public void addItem(String itemName, String type, String function, int quantity){

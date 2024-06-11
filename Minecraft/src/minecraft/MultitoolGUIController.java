@@ -60,7 +60,7 @@ public class MultitoolGUIController implements Initializable {
             ObservableList<Tool> tools = FXCollections.observableArrayList(toolslist);
             toolList.setItems(tools);
         }
-        // 初始化 multiToolList
+        //multiToolList
         try {
             updateToolListView();
         } catch (SQLException e) {

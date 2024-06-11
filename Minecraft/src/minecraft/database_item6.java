@@ -55,7 +55,7 @@ public class database_item6 {
         addCrop(username, "Melon Slice", 15,15, "Axes", 
                 8, 0, 0, 3, 7);
         addCrop(username, "Pumpkin", 15,15, "Axes", 
-                8, 0, 0, 1, 11);
+                8, 0, 0, 1, 1);
         addCrop(username, "Sweet Berries", 15,15, "None", 
                 4, 0, 0, 2, 3);
         //crop is saved into itemBox as crop only, the seed is not taken into account

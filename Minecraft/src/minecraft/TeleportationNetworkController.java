@@ -18,6 +18,9 @@ public class TeleportationNetworkController {
      * @return True if the teleportation points are added from the database into the data structure of the graph
      */
     public static boolean restoreNode(ArrayList<Point> nodesFromDB) throws SQLException {
+        nodes.clear();
+        adjacencyList.clear();
+        edges.clear();
         for (Point p : nodesFromDB) {
             boolean inDatabaseDuplicated = false;
             for (Point pHad : nodes) {
@@ -26,12 +29,14 @@ public class TeleportationNetworkController {
                      break;
                 }
             }
+
             if (! inDatabaseDuplicated) {
                 nodes.add(new Point(p.nameOfTeleportationPoint, p.owner, p.x, p.y, null, p.friendRequestsReceived, p.friendWaitingAcceptance));
                 System.out.println(nodesFromDB.get(nodesFromDB.size()-1).friendRequestsReceived);
                 System.out.println(nodesFromDB.get(nodesFromDB.size()-1).friendWaitingAcceptance);
                 adjacencyList.add(new ArrayList<>());
-            } else {
+            } 
+            else {
                 database_item5.removeteleportationPoint(p.getNameOfTeleportationPoint());
             }
            

@@ -104,6 +104,7 @@ public class LoginController implements Initializable {
             AutofarmerblockController.username = username;
             SecureChestController.username = username;
             AdventurerDiaryController.username= username;
+            TeleportationNetworkController_GUI.username = username;
             Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("minecraft-style.css").toExternalForm());

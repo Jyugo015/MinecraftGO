@@ -21,7 +21,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -72,7 +74,7 @@ public class TeleportationNetworkController_GUI extends Application {
     private static ArrayList<SingleTeleportationPoint> selected = new ArrayList<>();
     private static ArrayList<Line> edges = new ArrayList<>();
     private static Label reminder = new Label();
-    private static String username;
+    public static String username;
     private static int fontSize = 12;
     private static Circle imaginaryCircle = new Circle(r);
     private static SingleTeleportationPoint currentPoint;
@@ -85,6 +87,8 @@ public class TeleportationNetworkController_GUI extends Application {
         defaultImage = new Image(getClass().getResourceAsStream(imageFilePath +"background.jpg"));
         mapImage = new Image(getClass().getResourceAsStream(imageFilePath +"Map.png"));
         pane1 = new BorderPane();
+        currentPoint = null;
+        currentlySelected = null;
         try {
             Connection connection = getConnection();
             String statement = "SELECT * FROM teleportationPoint";
@@ -100,7 +104,6 @@ public class TeleportationNetworkController_GUI extends Application {
         } catch (SQLException ex) {
             Logger.getLogger(TeleportationNetworkController_GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, false);
         Background background = new Background(new BackgroundImage(mapImage,BackgroundRepeat.NO_REPEAT,
             BackgroundRepeat.NO_REPEAT,
@@ -108,13 +111,16 @@ public class TeleportationNetworkController_GUI extends Application {
             bSize));
         pane1.setBackground(background);
         
-        // Initiate the current point if any ------------------------------------------------------get username ----------------------------------
-        username = "defaultUser";
         
         backToMainPageButton.setOnAction(e->{
             try {
-                MainPage mainPage = new MainPage();
-                mainPage.start((Stage) ((Button) e.getSource()).getScene().getWindow());
+                Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
+                Scene scene = new Scene (root);
+                stage.setTitle("Main");
+                Image icon = new Image(getClass().getResourceAsStream("/minecraft/icon/Minecraft.png"));
+                stage.getIcons().add(icon);
+                stage.setScene(scene);
+                stage.show();
             } catch (IOException ex) {
                 Logger.getLogger(AutomatedSortingChest.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -122,8 +128,22 @@ public class TeleportationNetworkController_GUI extends Application {
         
         stage.setOnCloseRequest((WindowEvent t) -> {
             try {
-                MainPage mainPage = new MainPage();
-                mainPage.start(new Stage());
+                // Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
+                // Scene scene = new Scene (root);
+                // stage.setTitle("Main");
+                // Image icon = new Image(getClass().getResourceAsStream("/minecraft/icon/Minecraft.png"));
+                // stage.getIcons().add(icon);
+                // stage.setScene(scene);
+                Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
+                Scene scene = new Scene(root);
+                Stage stage = new Stage();
+                stage.setScene(scene);
+                stage.setTitle("Main");
+                scene.getStylesheets().add(getClass().getResource("minecraft-style.css").toExternalForm());
+                stage.getIcons().clear();
+                Image icon = new Image(getClass().getResourceAsStream("/minecraft/icon/Minecraft.png"));
+                stage.getIcons().add(icon);
+                stage.show();
             } catch (IOException ex) {
                 Logger.getLogger(AutomatedSortingChest.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -1112,11 +1132,14 @@ public class TeleportationNetworkController_GUI extends Application {
                     point.filter.setFill(Color.rgb(255,0, 0, 0.5));
                     point.canSelect  = false;
                     point.circleFrame.setOpacity(0.8);
+                } else{
+                    point.filter.setFill(Color.rgb(0,0, 0, 0));
                 }
             }
             
             try {
                 String currentPointName = database_item5.getCurrentPoint(username);
+                System.out.println("Current point of " + username + " is " + currentPointName);
                 for (SingleTeleportationPoint p : points) {
                     if (p.getNodeName().equals(currentPointName)) {
                         currentPoint = p;

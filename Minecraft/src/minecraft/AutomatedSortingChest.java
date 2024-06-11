@@ -12,8 +12,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
@@ -96,9 +98,13 @@ public class AutomatedSortingChest extends Application {
         
         backToMainPageButton.setOnAction(e->{
             try {
-                MainPage mainPage = new MainPage();
-                mainPage.start((Stage) ((Button) e.getSource()).getScene().getWindow());
-//                stage.close();
+                Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
+                Scene scene = new Scene (root);
+                stage.setTitle("Main");
+                Image icon = new Image(getClass().getResourceAsStream("/minecraft/icon/Minecraft.png"));
+                stage.getIcons().add(icon);
+                stage.setScene(scene);
+                stage.show();
             } catch (IOException ex) {
                 Logger.getLogger(AutomatedSortingChest.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -107,8 +113,13 @@ public class AutomatedSortingChest extends Application {
         
         stage.setOnCloseRequest((WindowEvent t) -> {
             try {
-                MainPage mainpage = new MainPage();
-                mainpage.start(new Stage());
+                Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
+                Scene scene = new Scene (root);
+                stage.setTitle("Main");
+                Image icon = new Image(getClass().getResourceAsStream("/minecraft/icon/Minecraft.png"));
+                stage.getIcons().add(icon);
+                stage.setScene(scene);
+                stage.show();
             } catch (IOException ex) {
                 System.out.println("Failed to go to the main page");
             }

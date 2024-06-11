@@ -48,6 +48,7 @@ public class database_summary {
         database_item1.initialize("defaultUser8");
         database_item2.initialize("defaultUser");
         database_item3.initialize("defaultUser");
+        database_item5.initialize();
         database_item6.initialize("defaultUser");
         database_item7.testing();
         database_item8.initialize("defaultUser");
@@ -59,7 +60,6 @@ public class database_summary {
         database_item8.initializeSignup("defaultUser7");
         database_item8.initializeSignup("defaultUser8");
         database_item9.initialize();
-        initializeTeleportationPoint();
     }
 
     public static void initializeSignup(String username) throws SQLException{

@@ -125,13 +125,6 @@ public class PotionSatchelController implements Initializable {
                 if (satchel.getHead() != null) {
                     satchel.useFirstPotionAutomatically(this);
                 } else {
-                    Platform.runLater(() -> {
-                        addButton.setDisable(false);
-                        doneButton.setDisable(false);
-                        removeButton.setDisable(false);
-                        clearPotionButton.setDisable(false);
-                        displayUsePotion();
-                    });
                     ((Timeline) event.getSource()).stop(); // Stop the timeline when all potions are used
                 }
             } catch (SQLException | InterruptedException e) {
@@ -139,6 +132,17 @@ public class PotionSatchelController implements Initializable {
             }
         }));
         timeline.setCycleCount(currentNum);
+
+        timeline.setOnFinished(event -> {
+            Platform.runLater(() -> {
+                addButton.setDisable(false);
+                doneButton.setDisable(false);
+                removeButton.setDisable(false);
+                clearPotionButton.setDisable(false);
+                displayUsePotion();
+            });
+        });
+        
         timeline.play();
     }
 

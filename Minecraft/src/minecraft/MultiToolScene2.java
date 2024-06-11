@@ -127,34 +127,14 @@ public class MultiToolScene2 extends Application{
 //             }
             Parent root;
             try {
-                root = FXMLLoader.load(getClass().getResource("MultitoolGUI.fxml"));
-                Scene scene = new Scene(root);
-                Stage stage2 = (Stage) leftButton.getScene().getWindow();
-                stage2.setScene(scene);
-                stage2.setTitle("Multi Tool");
-                scene.getStylesheets().add(getClass().getResource("minecraft-style.css").toExternalForm());
-                Image icon = new Image(getClass().getResourceAsStream("/minecraft/icon/Multitool.png"));
-                stage2.getIcons().clear();
-                stage2.getIcons().add(icon);
-                stage.setOnCloseRequest(e1->{
-                try {
-                    System.out.println("In");
-                    Parent root1 = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
-                    Scene scene1 = new Scene(root1);
-                    scene1.getStylesheets().add(getClass().getResource("minecraft-style.css").toExternalForm());
-                    Stage stage1= new Stage();
-                    stage1.setTitle("Minecraft");
-                    stage1.setScene(scene1);
-                    Image icon1 = new Image(getClass().getResourceAsStream("/minecraft/icon/Minecraft.png"));
-                    stage.getIcons().clear();
-                    stage.getIcons().add(icon1);
-                    stage1.show();
-                    stage.close();
-                } catch (IOException e2) {
-                    e2.printStackTrace();
-                }
-            });
-            stage.show();
+                Parent r = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
+                Scene scene = new Scene (r);
+                stage.setTitle("Main");
+                Image icon = new Image(getClass().getResourceAsStream("/minecraft/icon/Minecraft.png"));
+                stage.getIcons().add(icon);
+                stage.setScene(scene);
+                stage.show();
+                stage.show();
             } catch (IOException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();

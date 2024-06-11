@@ -131,7 +131,7 @@ public class SecureChest {
      * @param username 
      * @throws SQLException 
      */
-    public void editSecurityLevel(String level, String username) throws SQLException {
+    public void editSecurityLevel(String level) throws SQLException {
         securityLevel = level;
         if (level.equals("Private"))
             accessPermissions.clear();

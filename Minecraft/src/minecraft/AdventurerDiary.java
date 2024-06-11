@@ -17,11 +17,11 @@ import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
 
-class AdventurerDiary {
+class AdventurerDiary extends AdventurerDiaryController{
 
     private Map<Integer, String> entries;
     private int entryCounter;
-    public static String user;
+    private String user;
 
     /**
      * Constructs an AdventurerDiary with the specified username and initializes the diary entries.
@@ -30,9 +30,9 @@ class AdventurerDiary {
      * @throws SQLException if there is an error retrieving entries from the database
      */
     public AdventurerDiary(String username) throws SQLException {
-        user = username;
-        this.entries = database_item8.retrieveEntries(user);
+        this.entries = database_item8.retrieveEntries(username);
         this.entryCounter = entries.size() + 1;
+        this.user = username;
     }
 
      /**

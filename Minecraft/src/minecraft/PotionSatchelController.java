@@ -45,7 +45,7 @@ import minecraft.Potions.Potion;
  *
  * @author Asus
  */
-public class PotionSatchelController extends database_item3 implements Initializable {
+public class PotionSatchelController implements Initializable {
 
     @FXML
     private GridPane potionGrid;
@@ -79,6 +79,7 @@ public class PotionSatchelController extends database_item3 implements Initializ
     private newPotionSatchel satchel = new newPotionSatchel();
     public ArrayList<String> potionBag;
     public static Thread backgroundThread;
+    public static String username;
 
     //each time removing or adding potion into satchel will change the list of potion
     //(remove potion from list of potion if adding potion to satchel)
@@ -87,14 +88,15 @@ public class PotionSatchelController extends database_item3 implements Initializ
     public void initialize(URL url, ResourceBundle rb) {
         // Potions potions = new Potions();//initializing the potions
         try {
-            potionBag = database_item3.retrievePotion("defaultUser");
-            selectedPotions = database_item3.retrievePotionSatchel("defaultUser");
+            potionBag = database_item3.retrievePotion(username);
+            selectedPotions = database_item3.retrievePotionSatchel(username);
             selectedPotions.forEach(e->satchel.addPotionToSatchel(e));
         } catch (SQLException e) {
             e.printStackTrace();
         }
         potionMap = new Potions().getSortedPotionMap();
         // usePotionButton.setDisable(selectedPotions==null);
+        totalPotionsAdded = satchel.getSize();
         addButton.setOnAction(e->handleAddButtonClick(e));
         removeButton.setOnAction(e->{
             try {
@@ -165,12 +167,14 @@ public class PotionSatchelController extends database_item3 implements Initializ
             buttonPotionMap.put(button, potion);
             
             boolean found = false;
-            for (String potionName: potionBag){
-                // for (Potion potion1: tempSelectedPotions){
-                    if (potionName.equals(entry.getKey())){
-                        found= true;
-                    }
-                // }
+            if (potionBag!= null&&!potionBag.isEmpty()){
+                for (String potionName: potionBag){
+                    // for (Potion potion1: tempSelectedPotions){
+                        if (potionName.equals(entry.getKey())){
+                            found= true;
+                        }
+                    // }
+                }
             }
 
             if (!found){
@@ -299,9 +303,9 @@ public class PotionSatchelController extends database_item3 implements Initializ
             satchel.addPotionToSatchel(e);
             potionBag.remove(e.getName());
             try {
-                database_item3.addPotionSatchel("defaultUser", 
+                database_item3.addPotionSatchel(username, 
                                                 e.getName(),e.getPotency(), e.getEffect());
-                database_itemBox.removeItem(e.getName(), "defaultUser", 1);
+                database_itemBox.removeItem(e.getName(), username, 1);
                 System.out.println(e.getName() + " " +  String.valueOf(e.getPotency())+ " " + e.getEffect());
             } catch (SQLException e1) {
                 e1.printStackTrace();
@@ -335,7 +339,7 @@ public class PotionSatchelController extends database_item3 implements Initializ
     public void updateSelectedPotionsGrid() {
         selectedPotionGrid.getChildren().clear();
         int col = 0;
-        if (selectedPotions!=null ){
+        if (selectedPotions!=null){
             System.out.println("Potion size: " + selectedPotions.size());
             for (Potion potion : selectedPotions) {
                 System.out.println(potion.getName());
@@ -372,9 +376,12 @@ public class PotionSatchelController extends database_item3 implements Initializ
         //     //deselect the currentselectedbutton if another button is selected
         // }
         System.out.println("got choose" + potion.getName());
-        currentlySelectedPotion = potion;
-        button.getStyleClass().remove(styleSelected);
-        updateSelectedPotionsGrid();
+        selectedPotions.stream().filter(e->e.equals(potion)).findFirst()
+                        .ifPresent(selected->{
+                            currentlySelectedPotion = potion;
+                            button.getStyleClass().remove(styleSelected);
+                            updateSelectedPotionsGrid();
+                        });
     }
 
     @FXML
@@ -389,9 +396,9 @@ public class PotionSatchelController extends database_item3 implements Initializ
             satchel.removePotion(potion);
             potionBag.add(potion.getName());
             // selectedPotionMap.remove(currentlySelectedButton);
-            database_item3.removePotionSatchel("defaultUser", potion.getName(), 
+            database_item3.removePotionSatchel(username, potion.getName(), 
                                                 potion.getPotency(), potion.getEffect());
-            database_itemBox.addItem("defaultUser", potion.getName(),1);
+            database_itemBox.addItem(username, potion.getName(),1);
             // totalPotionsAdded--;
             totalPotionsAdded = satchel.getSize();
             buttonPotionMap.entrySet().stream()
@@ -421,15 +428,15 @@ public class PotionSatchelController extends database_item3 implements Initializ
             selectedPotions.forEach(potion-> {
                 try {
                     potionBag.add(potion.getName());
-                    database_itemBox.addItem("defaultUser", 
+                    database_itemBox.addItem(username, 
                                             potion.getName(), 1);
-                    database_item3.addPotion("defaultUser", potion.getName(), 
+                    database_item3.addPotion(username, potion.getName(), 
                                             potion.getPotency(), potion.getEffect());
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             });
-            database_item3.clearPotionSatchel("defaultUser");
+            database_item3.clearPotionSatchel(username);
             selectedPotions.clear();
             satchel.clearSatchel();
             totalPotionsAdded =satchel.getSize();

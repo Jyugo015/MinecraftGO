@@ -79,7 +79,6 @@ public class LoginController implements Initializable {
             return;
         }
        
-        //这里database拿user email,我那个hashmap全部可以换掉
         User user = database_user.getUserByEmail(email);
 
         if (user == null) {
@@ -87,7 +86,7 @@ public class LoginController implements Initializable {
             return;
         }
         
-        //password hashing,我们看不到user的密码的(databse存这个，不要存normal password)
+        //password hashing, administrator cannot really get to know the password of user
         String hashedPassword = PasswordHash.hashPassword(password);
 
         if (!user.getUsername().equals(username) || !user.getHashedPassword().equals(hashedPassword)) {
@@ -98,6 +97,13 @@ public class LoginController implements Initializable {
         System.out.println("User logged in: " + username + ", " + email);
         
         try {
+            EnderBackpackController.username = username;
+            MultitoolGUIController.username = username;
+            newPotionSatchel.username= username;
+            PotionSatchelController.username = username;
+            AutofarmerblockController.username = username;
+            SecureChestController.username = username;
+            AdventurerDiaryController.username= username;
             Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
             Scene scene = new Scene(root);
             scene.getStylesheets().add(getClass().getResource("minecraft-style.css").toExternalForm());
@@ -123,7 +129,7 @@ public class LoginController implements Initializable {
     }
 
     private boolean isValidEmail(String email) {
-        return email.contains("@") && email.endsWith(".com");
+        return email.contains("@") && (email.endsWith(".com")||email.endsWith(".my"));
     }
 
      private void clearErrors() {

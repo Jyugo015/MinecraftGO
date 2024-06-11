@@ -78,7 +78,7 @@
                           </items>
                         </MenuButton>
                         <Label layoutX="41.0" layoutY="95.0" text="Pending Task(s) : " />
-                        <Label fx:id="ongoingTask" layoutX="48.0" layoutY="49.0" styleClass="text-body" stylesheets="@minecraft-style.css" text="Label" />
+                        <Label fx:id="ongoingTask" layoutX="48.0" layoutY="49.0" styleClass="text-medium" stylesheets="@minecraft-style.css" text="Label" />
                      </children>
                   </AnchorPane>
                </content>

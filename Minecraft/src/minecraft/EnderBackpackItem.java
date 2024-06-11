@@ -1,6 +1,6 @@
 package minecraft;
 
-public class EnderBackpackItem implements Comparable<EnderBackpackItem>{
+public class EnderBackpackItem extends EnderBackpackController implements Comparable<EnderBackpackItem>{
     public int quantity;
     public String name, type, function;
 
@@ -29,7 +29,7 @@ public class EnderBackpackItem implements Comparable<EnderBackpackItem>{
     public void setSpecificationBackpack(String itemname){
         try{
             this.setFunction(database_item1.retrieveFunction(itemname));
-            this.setQuantity(database_item1.retrieveQuantity(itemname, "defaultUser"));
+            this.setQuantity(database_item1.retrieveQuantity(itemname, username));
             this.setType(database_item1.retrieveType(itemname));
         }
         catch(Exception e){
@@ -40,7 +40,7 @@ public class EnderBackpackItem implements Comparable<EnderBackpackItem>{
     public void setSpecificationItemBox(String itemname){
         try{
             this.setFunction(database_itemBox.retrieveFunction(itemname));
-            this.setQuantity(database_itemBox.retrieveQuantity(itemname, "defaultUser"));
+            this.setQuantity(database_itemBox.retrieveQuantity(itemname, username));
             this.setType(database_itemBox.retrieveType(itemname));
         }
         catch(Exception e){

@@ -142,15 +142,12 @@ public class depositChest  implements Initializable{
         dialog.getDialogPane().getStylesheets().add(cssFilePath);
         dialog.getDialogPane().getStyleClass().add("dialog-pane");
         
-        // 设置按钮
         ButtonType okButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
 
-        // Apply styles to the actual buttons
         dialog.getDialogPane().lookupButton(okButtonType).getStyleClass().add("button");
         dialog.getDialogPane().lookupButton(ButtonType.CANCEL).getStyleClass().add("button");
         
-        // 创建一个输入区域
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -211,23 +208,21 @@ public class depositChest  implements Initializable{
                 chest.deposit(username, item, quantitytoadd);
                 box.removeItem(item, quantitytoadd);
                 if (item.getType().equals("Potion"))
-                    database_item3.removePotion("defaultUser", item.getName());
+                    database_item3.removePotion(username, item.getName());
                 else if (item.getType().equals("Food")){
-                        String[] crop = {"Carrot", "Wheat", "Potato", "Beetroot", "Melon Slice", "Pumpkin", "Sweet Berries"};
-                        for (String cropname:crop){
-                            if (cropname.equals(item.getName())){
-                                Crop cropToAdd = new Crop(item.getName());
-                                database_item6.addCrop("defaultUser", cropToAdd, quantitytoadd);
-                            }
+                    String[] crop = {"Carrot", "Wheat", "Potato", "Beetroot", "Melon Slice", "Pumpkin", "Sweet Berries"};
+                    for (String cropname:crop){
+                        if (cropname.equals(item.getName())){
+                            Crop cropToAdd = new Crop(item.getName());
+                            database_item6.addCrop(username, cropToAdd, quantitytoadd);
                         }
                     }
+                }
             } catch (SQLException e) {
                 e.printStackTrace();
             }
 
-            if (item.equals(selected)) {
-                selected = null;
-            }
+            selected = null;
             display();
         });
     }

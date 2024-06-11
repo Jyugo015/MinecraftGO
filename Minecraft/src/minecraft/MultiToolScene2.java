@@ -44,10 +44,11 @@ public class MultiToolScene2 extends Application{
     private StackPane notificationBox = new StackPane();
     private FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.7), notificationBox);
     private FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.7), notificationBox);
+    public static String username;
     @Override
     public void start(Stage stage) throws Exception {
         // Get data from the database
-        multipleTool = new MultipleTool("defaultUser");
+        multipleTool = new MultipleTool(username);
         currentTool = multipleTool.getTool(0);
         imageView.setFitHeight(300);
         imageView.setFitWidth(300);
@@ -117,12 +118,46 @@ public class MultiToolScene2 extends Application{
         
         mainPageButton.setOnAction(e->{
             stage.close();
+//             try {
+//                 MainPage mainPage = new MainPage();
+//                 mainPage.start((Stage) ((Button) e.getSource()).getScene().getWindow());
+// //                stage.close();
+//             } catch (IOException ex) {
+//                 Logger.getLogger(AutomatedSortingChest.class.getName()).log(Level.SEVERE, null, ex);
+//             }
+            Parent root;
             try {
-                MainPage mainPage = new MainPage();
-                mainPage.start((Stage) ((Button) e.getSource()).getScene().getWindow());
-//                stage.close();
-            } catch (IOException ex) {
-                Logger.getLogger(AutomatedSortingChest.class.getName()).log(Level.SEVERE, null, ex);
+                root = FXMLLoader.load(getClass().getResource("MultitoolGUI.fxml"));
+                Scene scene = new Scene(root);
+                Stage stage2 = (Stage) leftButton.getScene().getWindow();
+                stage2.setScene(scene);
+                stage2.setTitle("Multi Tool");
+                scene.getStylesheets().add(getClass().getResource("minecraft-style.css").toExternalForm());
+                Image icon = new Image(getClass().getResourceAsStream("/minecraft/icon/Multitool.png"));
+                stage2.getIcons().clear();
+                stage2.getIcons().add(icon);
+                stage.setOnCloseRequest(e1->{
+                try {
+                    System.out.println("In");
+                    Parent root1 = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
+                    Scene scene1 = new Scene(root1);
+                    scene1.getStylesheets().add(getClass().getResource("minecraft-style.css").toExternalForm());
+                    Stage stage1= new Stage();
+                    stage1.setTitle("Minecraft");
+                    stage1.setScene(scene1);
+                    Image icon1 = new Image(getClass().getResourceAsStream("/minecraft/icon/Minecraft.png"));
+                    stage.getIcons().clear();
+                    stage.getIcons().add(icon1);
+                    stage1.show();
+                    stage.close();
+                } catch (IOException e2) {
+                    e2.printStackTrace();
+                }
+            });
+            stage.show();
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
             }
         });
         

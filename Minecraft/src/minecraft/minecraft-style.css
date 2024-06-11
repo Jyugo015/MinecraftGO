@@ -198,6 +198,12 @@
     -fx-fill: white;
 }
 
+.text-medium{
+    -fx-font-size: 12px;
+    -fx-font-family: 'Unifont';
+    -fx-fill: black;
+}
+
 .text-custom {
     -fx-font-size: 10px;
     -fx-font-family: 'Unifont';

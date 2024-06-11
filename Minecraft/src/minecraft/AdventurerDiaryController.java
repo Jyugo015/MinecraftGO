@@ -32,16 +32,13 @@ import javafx.scene.layout.VBox;
 public class AdventurerDiaryController implements Initializable {
 
     private AdventurerDiary diary;
-
     @FXML
     private TextField searchBar;
-
     @FXML
     private Button searchButton;
-
     @FXML
     private VBox entriesContainer;
-    public static String username = "defaultUser";
+    public static String username;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {

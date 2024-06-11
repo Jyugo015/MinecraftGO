@@ -43,7 +43,7 @@ import java.util.List;
  * @author Asus
  */
 
-public class EnderBackpackController extends database_item1 implements Initializable{
+public class EnderBackpackController implements Initializable{
 
     @FXML
     private ScrollPane scrollbackpack;
@@ -68,14 +68,14 @@ public class EnderBackpackController extends database_item1 implements Initializ
     private ObservableList<String> items = FXCollections.observableArrayList();
     public static EnderBackpackImplementation backpack;
     public static ItemBox box;
-    private static String username;//=LoginPageController.username    
+    public static String username;//=LoginPageController.username    
     ArrayList<String> retrieve;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
-            backpack = new EnderBackpackImplementation("defaultUser");
-            box = new ItemBox("defaultUser");
+            backpack = new EnderBackpackImplementation(username);
+            box = new ItemBox(username);
         } catch (SQLException e) {
             e.printStackTrace();
         } 
@@ -170,7 +170,6 @@ public class EnderBackpackController extends database_item1 implements Initializ
                 button.setOnAction(e -> selectItem(item));
             }
         }
-        updateIncreaseCapacityButton();
     }
 
     private void selectItem(EnderBackpackItem item) {
@@ -194,7 +193,6 @@ public class EnderBackpackController extends database_item1 implements Initializ
         dialog.getDialogPane().getStylesheets().add(cssFilePath);
         dialog.getDialogPane().getStyleClass().add("dialog-pane");
 
-        // 设置按钮
         ButtonType okButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
         dialog.getDialogPane().lookupButton(okButtonType).setDisable(true);
@@ -202,7 +200,6 @@ public class EnderBackpackController extends database_item1 implements Initializ
         dialog.getDialogPane().lookupButton(okButtonType).getStyleClass().add("button");
         dialog.getDialogPane().lookupButton(ButtonType.CANCEL).getStyleClass().add("button");
         
-        // 创建一个输入区域
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -271,14 +268,14 @@ public class EnderBackpackController extends database_item1 implements Initializ
                 updateIncreaseCapacityButton();
                 updateReduceCapacityButton();
                 box.addItem(item.getName(), quantitytoremove);
-                database_item1.removeItem(item.getName(), "defaultUser", quantitytoremove);
-                database_itemBox.addItem("defaultUser", item.getName(), quantitytoremove);
+                database_item1.removeItem(item.getName(), username, quantitytoremove);
+                database_itemBox.addItem(username, item.getName(), quantitytoremove);
                 if (item.getType().equals("Potion")){
                     Potions potions = new Potions();
                     potions.getPotionsMap().entrySet().stream().filter(entry->entry.getKey()
                                          .equals(item.getName())).findFirst().ifPresent(entry->{
                         try {
-                            database_item3.addPotion("defaultUser", item.getName(), 
+                            database_item3.addPotion(username, item.getName(), 
                                                         entry.getValue().getPotency(), 
                                                         entry.getValue().getEffect());
                         } catch (SQLException e) {
@@ -291,7 +288,7 @@ public class EnderBackpackController extends database_item1 implements Initializ
                     for (String cropname:crop){
                         if (cropname.equals(item.getName())){
                             Crop cropToAdd = new Crop(item.getName());
-                            database_item6.addCrop("defaultUser", cropToAdd, quantitytoremove);
+                            database_item6.addCrop(username, cropToAdd, quantitytoremove);
                         }
                     }
                 }
@@ -333,7 +330,6 @@ public class EnderBackpackController extends database_item1 implements Initializ
         dialog.getDialogPane().getStylesheets().add(cssFilePath);
         dialog.getDialogPane().getStyleClass().add("dialog-pane");
 
-        // 设置按钮
         ButtonType okButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
 
@@ -342,7 +338,6 @@ public class EnderBackpackController extends database_item1 implements Initializ
         dialog.getDialogPane().lookupButton(okButtonType).getStyleClass().add("button");
         dialog.getDialogPane().lookupButton(ButtonType.CANCEL).getStyleClass().add("button");
         
-        // 创建一个输入区域
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -423,7 +418,6 @@ public class EnderBackpackController extends database_item1 implements Initializ
         dialog.getDialogPane().getStylesheets().add(cssFilePath);
         dialog.getDialogPane().getStyleClass().add("dialog-pane");
 
-        // 设置按钮
         ButtonType okButtonType = new ButtonType("Confirm", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
 
@@ -432,7 +426,6 @@ public class EnderBackpackController extends database_item1 implements Initializ
         dialog.getDialogPane().lookupButton(okButtonType).getStyleClass().add("button");
         dialog.getDialogPane().lookupButton(ButtonType.CANCEL).getStyleClass().add("button");
        
-        // 创建一个输入区域
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
@@ -449,7 +442,6 @@ public class EnderBackpackController extends database_item1 implements Initializ
 
         dialog.getDialogPane().setContent(grid);
 
-        // 请求焦点
         Platform.runLater(capacityField::requestFocus);
 
         // Add a listener to the text property of the TextField
@@ -474,7 +466,6 @@ public class EnderBackpackController extends database_item1 implements Initializ
             }
         });
 
-        // 结果转换
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == okButtonType) {
                 try {
@@ -495,8 +486,8 @@ public class EnderBackpackController extends database_item1 implements Initializ
                 backpack.reduceCapacity(capacityReduction);
             } catch (SQLException e) {
                 e.printStackTrace();
-            } // 减少最大容量
-            updateDisplay();  // 更新界面
+            } 
+            updateDisplay();  
             updateIncreaseCapacityButton();
             updateReduceCapacityButton();
         });

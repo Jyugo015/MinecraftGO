@@ -134,8 +134,8 @@ public class SecureChestController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            chest = new SecureChest("defaultUser");
-            otherChest = database_item7.retrieveChestWithAccess("defaultUser");
+            chest = new SecureChest(username);
+            otherChest = database_item7.retrieveChestWithAccess(username);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -386,7 +386,7 @@ public class SecureChestController implements Initializable{
                 String selectedPermission = permissionMenuButton.getText();
                 try {
                     if (!selectedPermission.equals("Select Security Level")){
-                        chest.editSecurityLevel(selectedPermission, chest.getOwner());
+                        chest.editSecurityLevel(selectedPermission);
                         display();
                     }
                 } catch (SQLException e) {
@@ -527,7 +527,6 @@ public class SecureChestController implements Initializable{
                                 case "Full Access":
                                     try {
                                         chest.editAccess(selectedUser.split(" ")[0], 2);
-                                        database_item7.updateChestPermission("defaultUser", username, 2);
                                     } catch (SQLException e1) {
                                         e1.printStackTrace();
                                     }    
@@ -544,7 +543,7 @@ public class SecureChestController implements Initializable{
 
     public void displayRequestSent() throws SQLException{
         requestSent.clear();
-        requestSentMap = database_item7.retrieveRequestSent("defaultUser");
+        requestSentMap = database_item7.retrieveRequestSent(username);
         for (Map.Entry<String, String> entry : requestSentMap.entrySet()){
             System.out.println(entry.getKey() + " " + entry.getValue());
             requestSent.add(new Request(entry.getKey(), entry.getValue()));
@@ -565,7 +564,7 @@ public class SecureChestController implements Initializable{
         dialog.getDialogPane().getStylesheets().add(cssFilePath);
         dialog.getDialogPane().getStyleClass().add("dialog-pane");
 
-        chestNoAccess = database_item7.retrieveChestNoAccess("defaultUser");
+        chestNoAccess = database_item7.retrieveChestNoAccess(username);
         ObservableList<SecureChest> chestList = FXCollections.observableArrayList(chestNoAccess);
         ListView<SecureChest> chestListView = new ListView<>();
         chestListView.setItems(chestList);
@@ -616,7 +615,7 @@ public class SecureChestController implements Initializable{
             // For example, show a new dialog with details of the selected chest
             HashMap<SecureChest, Integer> requestSentOredi = new HashMap<SecureChest, Integer>();
             try {
-                requestSentOredi = database_item7.retrieveAccessRequestOther("defaultUser");
+                requestSentOredi = database_item7.retrieveAccessRequestOther(username);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -849,7 +848,7 @@ public class SecureChestController implements Initializable{
 
     public void showOtherChestMainPage(ActionEvent event, SecureChest otherChestToShow) throws IOException{
         secureChestOther.chestToShow = otherChestToShow;
-        secureChestOther.username = "defaultUser";
+        secureChestOther.username = username;
         Parent root = FXMLLoader.load(getClass().getResource("secureChestOther.fxml"));
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("minecraft-style.css").toExternalForm());
@@ -859,7 +858,7 @@ public class SecureChestController implements Initializable{
         stage.setOnCloseRequest(e->{
             otherChest.entrySet().stream().filter(entry->entry.getKey().equals(otherChestToShow))
                       .map(entry -> entry.getKey()).findFirst().ifPresent(chestToUpdate ->{
-            chestToUpdate = secureChestOther.chestToShow;
+                chestToUpdate = secureChestOther.chestToShow;
             });
             try {
                 Parent root1 = FXMLLoader.load(getClass().getResource("SecureChest.fxml"));
@@ -882,7 +881,7 @@ public class SecureChestController implements Initializable{
     @FXML
     void handleDeposit(ActionEvent event) throws IOException {
         depositChest.chest = chest;
-        depositChest.username = "defaultUser";
+        depositChest.username = username;
         Parent root = FXMLLoader.load(getClass().getResource("depositChest.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) viewChestUser.getScene().getWindow();
@@ -913,7 +912,7 @@ public class SecureChestController implements Initializable{
     @FXML
     void handleWithdraw(ActionEvent event) throws IOException {
         withdrawChest.chest = chest;
-        withdrawChest.username = "defaultUser";
+        withdrawChest.username = username;
         Parent root = FXMLLoader.load(getClass().getResource("withdrawChest.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) viewChestUser.getScene().getWindow();

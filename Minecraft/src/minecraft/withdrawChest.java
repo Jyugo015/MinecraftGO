@@ -220,7 +220,7 @@ public class withdrawChest implements Initializable{
                     potions.getPotionsMap().entrySet().stream().filter(entry->entry.getKey()
                                          .equals(item.getKey().getName())).findFirst().ifPresent(entry->{
                         try {
-                            database_item3.addPotion("defaultUser", item.getKey().getName(), 
+                            database_item3.addPotion(username, item.getKey().getName(), 
                                                         entry.getValue().getPotency(), 
                                                         entry.getValue().getEffect());
                         } catch (SQLException e) {
@@ -233,7 +233,7 @@ public class withdrawChest implements Initializable{
                     for (String cropname:crop){
                         if (cropname.equals(item.getKey().getName())){
                             Crop cropToAdd = new Crop(item.getKey().getName());
-                            database_item6.addCrop("defaultUser", cropToAdd, quantitytoremove);
+                            database_item6.addCrop(username, cropToAdd, quantitytoremove);
                         }
                     }
                 }

@@ -107,7 +107,8 @@ public class AutofarmerblockController implements Initializable {
     private Task ongoingtask;
     Thread backgroundThread;
     private Map<Float, String> taskFertilised;
-    String fertiliserSet;
+    private String fertiliserSet;
+    public static String username;
 
     public static class cropToAdd {
 
@@ -150,14 +151,14 @@ public class AutofarmerblockController implements Initializable {
         //             () -> (anchorUrFarm.getHeight() - taskName.getHeight()) / 2,
         //             anchorUrFarm.heightProperty(), taskName.heightProperty()));
         try {
-            farm = new AutoFarmerBlock("defaultUser");
+            farm = new AutoFarmerBlock(username);
             System.out.println("run");
             for (Crop crop : farm.cropInBox) {
                 System.out.println(crop.getName() + " " + crop.getQuantitySeed());
             }
-            taskManager = farm.getTaskManager("defaultUser");
+            taskManager = farm.getTaskManager(username);
             taskManager.forEach(e-> System.out.println(e.getTask() + " " + e.getTaskID()));
-            taskFertilised = database_item6.retrieveTaskFertilisedID("defaultUser");
+            taskFertilised = database_item6.retrieveTaskFertilisedID(username);
             taskFertilised.entrySet().forEach(e-> System.out.println(e.getValue() + " " + e.getKey()));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -185,7 +186,7 @@ public class AutofarmerblockController implements Initializable {
                 e.printStackTrace();
             }
         });
-        backgroundThread.setDaemon(true);
+        backgroundThread.setDaemon(true);//low priority thread running behind the main program
         backgroundThread.start();
     }
 
@@ -200,7 +201,7 @@ public class AutofarmerblockController implements Initializable {
         // chooseFertiliser.setDisable(true);
         displayCrop();
         displayCart();
-        taskManager = farm.getTaskManager("defaultUser");
+        taskManager = farm.getTaskManager(username);
         try {
             displayOngoingTask();
         } catch (SQLException e) {

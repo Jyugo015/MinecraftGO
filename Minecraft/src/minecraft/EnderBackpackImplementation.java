@@ -4,24 +4,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class EnderBackpackImplementation{
+public class EnderBackpackImplementation extends EnderBackpackController{
     // public final int initialCapacity = 50;
     public int capacity, currentStock;
     public ArrayList<EnderBackpackItem> list = new ArrayList<EnderBackpackItem>();
-    public String username;
-       
-    
         
     public EnderBackpackImplementation(String username) throws SQLException{
-        this.capacity = database_item1.getCapacity("defaultUser");
+        this.capacity = database_item1.getCapacity(username);
         this.currentStock = 0;
-        ArrayList<String> itemNamelist = database_item1.retrieveItem("defaultUser");
+        ArrayList<String> itemNamelist = database_item1.retrieveItem(username);
         for (int i=0;i<itemNamelist.size();i++){
             this.addItem(new EnderBackpackItem(itemNamelist.get(i),"backpack"),0);
         }
         // this.getItemsName().forEach(e->System.out.println(e));//testing 
         // System.out.println(this.getCurrentStock());//testing 
-        this.username = username;
     }
     
     /**
@@ -129,7 +125,7 @@ public class EnderBackpackImplementation{
      */
     public void addCapacity(int amount) throws SQLException{//amount = 5/10/20/30
         this.capacity += amount;
-        database_item1.setCapacity(this.capacity,"defaultUser");
+        database_item1.setCapacity(this.capacity,username);
     }
 
     /**
@@ -139,7 +135,7 @@ public class EnderBackpackImplementation{
      */
     public void reduceCapacity(int amount) throws SQLException{
         this.capacity -= amount;
-        database_item1.setCapacity(this.capacity, "defaultUser");
+        database_item1.setCapacity(this.capacity, username);
     }
 
     /**

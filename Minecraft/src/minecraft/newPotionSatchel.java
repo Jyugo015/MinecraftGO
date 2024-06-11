@@ -23,7 +23,7 @@ public class newPotionSatchel extends Potions{
     private Potion head;
     private int size;
     private Potion currentPotion;
-    
+    public static String username;
       
     /**
      * Constructs a new PotionSatchel with default values.
@@ -202,9 +202,9 @@ public class newPotionSatchel extends Potions{
         List<Potion> selectedPotions = controller.getSelectedPotions();
         if (satchel.getHead() != null) {
             System.out.println("\nUsing potion automatically: " + satchel.getHead().getName());
-            database_item3.removePotionSatchel("defaultUser", satchel.getHead().getName(),
+            database_item3.removePotionSatchel(username, satchel.getHead().getName(),
                     satchel.getHead().getPotency(), satchel.getHead().getEffect());
-            database_item3.removePotion("defaultUser", satchel.getHead().getName());
+            database_item3.removePotion(username, satchel.getHead().getName());
 
             Platform.runLater(() -> {
                 try {

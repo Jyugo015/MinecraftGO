@@ -29,7 +29,7 @@ public class database_item4 {
         String driver = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://localhost:3306/minecraft";
         String username = "root";
-        String password = "urpw";
+        String password = "dbqLb1234!";
         try {
             Class.forName(driver);
         } catch (ClassNotFoundException e) {
@@ -134,6 +134,17 @@ public class database_item4 {
             insert.executeUpdate();
         }
         database_itemBox.removeItem(itemname, username, quantitytoadd);
+        if (type.equals("Potion"))
+            database_item3.removePotion(username, itemname);
+        else if (type.equals("Food")){
+            String[] crop = {"Carrot", "Wheat", "Potato", "Beetroot", "Melon Slice", "Pumpkin", "Sweet Berries"};
+            for (String cropname:crop){
+                if (cropname.equals(itemname)){
+                    Crop cropToAdd = new Crop(itemname);
+                    database_item6.removeCrop(username, cropToAdd.getName(), quantitytoadd);
+                }
+            }
+        }
         //update the database of itemBox oso, as the item is removed from itemBox then added to auotmatedsortingchest
     }    
     
@@ -150,6 +161,28 @@ public class database_item4 {
         if (result.next()){
             quantity = result.getInt("Quantity") - quantitytoreduce;
             database_itemBox.addItem(username, itemName, retrieveType(itemName), retrieveFunction(itemName), quantitytoreduce);
+            if (retrieveType(itemName).equals("Potion")){
+                Potions potions = new Potions();
+                potions.getPotionsMap().entrySet().stream().filter(entry->entry.getKey()
+                                     .equals(itemName)).findFirst().ifPresent(entry->{
+                    try {
+                        database_item3.addPotion(username, itemName, 
+                                                    entry.getValue().getPotency(), 
+                                                    entry.getValue().getEffect());
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                });        
+            }
+            else if (retrieveType(itemName).equals("Food")){
+                String[] crop = {"Carrot", "Wheat", "Potato", "Beetroot", "Melon Slice", "Pumpkin", "Sweet Berries"};
+                for (String cropname:crop){
+                    if (cropname.equals(itemName)){
+                        Crop cropToAdd = new Crop(itemName);
+                        database_item6.addCrop(username, cropToAdd, quantitytoreduce);
+                    }
+                }
+            }
             if (quantity<=0){
                 statement = "DELETE FROM automatedSortingChest WHERE username = ? AND Name = ? ";
                 PreparedStatement delete = connection.prepareStatement(statement);

@@ -414,96 +414,84 @@ public class AutofarmerblockController implements Initializable {
         ObservableList<Task> observableTools = FXCollections.observableArrayList(taskManager);
         listPendingTask.setItems(observableTools);
         System.out.println("update pending task");
-        checkBoxFertiliser.setDisable(true);
-        chooseFertiliser.setDisable(true);
-        // listPendingTask.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-        //     if (newValue != null) {
-        //         if (newValue.getTask().equals("Watering")) {
-        //             checkBoxFertiliser.setDisable(false);
-        //             chooseFertiliser.setDisable(true);
-        //         } else {
-        //             checkBoxFertiliser.setDisable(true);
-        //             chooseFertiliser.setDisable(true);
-        //         }
-        //         selectedTask = newValue;
-        //     }
-        // });
+    
+        // Add a listener to handle task selection changes
         listPendingTask.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedTask = newValue;
-            // Check if an item is selected and if it's a "Watering" task
-            if (selectedTask != null ){
-                fertiliserSet = null;
-                taskFertilised.entrySet().stream()
-                .filter(entry->selectedTask.getTaskID()==entry.getKey())
-                .findFirst().ifPresent(e-> {fertiliserSet = e.getValue();});
-                
-                if (fertiliserSet!=null){
-                    System.out.println("yes");
-                    System.out.println(selectedTask.taskID);
-                    checkBoxFertiliser.setDisable(true);
-                    checkBoxFertiliser.setSelected(true);
-                    chooseFertiliser.setDisable(true);
-                    chooseFertiliser.setText(fertiliserSet);
-                }
-
-                else if (selectedTask.getTask().equals("Watering")){
-                    checkBoxFertiliser.setDisable(false);
-                    checkBoxFertiliser.setSelected(false);
-                    chooseFertiliser.setDisable(true);
-                    chooseFertiliser.setText("Choose Fertiliser");
-                    System.out.println("runselectwatering");
-
-                    // Add a listener to the checkbox to enable/disable the fertiliser menu
-                    checkBoxFertiliser.selectedProperty().addListener((observable1, oldValue1, newValue1) -> {
-                        if (newValue1) {
-                            chooseFertiliser.setDisable(false);
-                            fertiliser1.setOnAction(e -> {
-                                chooseFertiliser.setText("Bone Meal");
-                                fertiliser = "Bone Meal";
-                                try {
-                                    farm.applyFertiliser(selectedTask, fertiliser, this);
-                                    taskFertilised.put(selectedTask.getTaskID(), fertiliser);
-                                    displayPendingTask();
-                                } catch (SQLException e1) {
-                                    e1.printStackTrace();
-                                }
-                            });
-            
-                            fertiliser2.setOnAction(e -> {
-                                chooseFertiliser.setText("Super Fertiliser");
-                                fertiliser = "Super Fertiliser";
-                                try {
-                                    farm.applyFertiliser(selectedTask, fertiliser, this);
-                                    displayPendingTask();
-                                    taskFertilised.put(selectedTask.getTaskID(), fertiliser);
-                                } catch (SQLException e1) {
-                                    e1.printStackTrace();
-                                }
-                            });
-                        } else {
-                            chooseFertiliser.setDisable(true);
-                            chooseFertiliser.setText("Choose Fertiliser");
-                        }
-                    });
-                }
-
-                else if (!taskFertilised.isEmpty()&&!taskFertilised.entrySet().stream()
-                .filter(e->e.getKey().equals(selectedTask.taskID))
-                .findFirst().isPresent()){
-                    checkBoxFertiliser.setDisable(true);
-                    checkBoxFertiliser.setSelected(false);
-                    chooseFertiliser.setDisable(true);
-                    chooseFertiliser.setText("Choose Fertiliser");
-                }
-            }
-            else {
-                checkBoxFertiliser.setDisable(true);
-                checkBoxFertiliser.setSelected(false);
+            updateUIForSelectedTask();
+        });
+    
+        // Set initial state for fertiliser options
+        setupFertiliserOptions();
+    }
+    
+    // Setup listeners for fertiliser options 
+    private void setupFertiliserOptions() {
+        checkBoxFertiliser.setDisable(true);
+        chooseFertiliser.setDisable(true);
+        checkBoxFertiliser.setSelected(false);
+        chooseFertiliser.setText("Choose Fertiliser");
+    
+        checkBoxFertiliser.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                chooseFertiliser.setDisable(false);
+                fertiliser1.setOnAction(e -> handleFertiliserSelection("Bone Meal"));
+                fertiliser2.setOnAction(e -> handleFertiliserSelection("Super Fertiliser"));
+            } else {
                 chooseFertiliser.setDisable(true);
                 chooseFertiliser.setText("Choose Fertiliser");
             }
         });
-        
+    }
+    
+    // Update the UI based on the selected task
+    private void updateUIForSelectedTask() {
+        if (selectedTask != null) {
+            fertiliserSet = null;
+            taskFertilised.entrySet().stream()
+                .filter(entry -> selectedTask.getTaskID() == entry.getKey())
+                .findFirst().ifPresent(e -> fertiliserSet = e.getValue());
+    
+            if (fertiliserSet != null) {
+                System.out.println("yes");
+                System.out.println(selectedTask.taskID);
+                checkBoxFertiliser.setDisable(true);
+                checkBoxFertiliser.setSelected(true);
+                chooseFertiliser.setDisable(true);
+                chooseFertiliser.setText(fertiliserSet);
+            } else if (selectedTask.getTask().equals("Watering")) {
+                checkBoxFertiliser.setDisable(false);
+                checkBoxFertiliser.setSelected(false);
+                chooseFertiliser.setDisable(true);
+                chooseFertiliser.setText("Choose Fertiliser");
+                System.out.println("runselectwatering");
+            } else {
+                resetFertiliserOptions();
+            }
+        } else {
+            resetFertiliserOptions();
+        }
+    }
+    
+    // Handle the selection of fertiliser and apply it to the task
+    private void handleFertiliserSelection(String fertiliser) {
+        chooseFertiliser.setText(fertiliser);
+        try {
+            farm.applyFertiliser(selectedTask, fertiliser, this);
+            taskFertilised.put(selectedTask.getTaskID(), fertiliser);
+            displayPendingTask(); // Refresh the task list
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    // Reset fertiliser-related UI elements
+    private void resetFertiliserOptions() {
+        checkBoxFertiliser.setDisable(true);
+        checkBoxFertiliser.setSelected(false);
+        chooseFertiliser.setDisable(true);
+        chooseFertiliser.setText("Choose Fertiliser");
+    }
 
         // Set actions for fertiliser options if checkbox is selected and the task is not already fertilised
         // checkBoxFertiliser.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -536,7 +524,6 @@ public class AutofarmerblockController implements Initializable {
         //         chooseFertiliser.setDisable(true);
         //     }
         // });
-    }
 
     public void viewCrop() {
         Alert alert = new Alert(AlertType.INFORMATION);

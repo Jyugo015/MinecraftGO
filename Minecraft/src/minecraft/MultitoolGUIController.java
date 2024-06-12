@@ -117,7 +117,7 @@ public class MultitoolGUIController implements Initializable {
         List<Tool> multipletoollist = multipleTools.getAllTools();
         if (multipletoollist!= null){
             for (Tool tool : multipletoollist){
-                database_itemBox.addItem(username, tool.getName(), 1);
+                // database_itemBox.addItem(username, tool.getName(), 1);
                 toolslist.add(tool);
             }
             multipleTools.clear();

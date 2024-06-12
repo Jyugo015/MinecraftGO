@@ -107,15 +107,16 @@ public class database_item7 {
     public static Map<SecureChest, Integer> retrieveChestWithAccess(String username) throws SQLException{
         Map<SecureChest, Integer> chestWithAccess = new HashMap<SecureChest, Integer>();
         Connection connection = getConnection();
-        String statement = "SELECT * FROM securechestSetting WHERE approveduser =? AND owner !=?";
+        String statement = "SELECT * FROM securechestSetting WHERE approveduser =? AND owner !=? AND securitylevel =?";
         PreparedStatement select = connection.prepareStatement(statement);
         select.setString(1, username);
         select.setString(2, username);
+        select.setString(3, "Self-defined");
         ResultSet result = select.executeQuery();
         while(result.next()){
             chestWithAccess.put(new SecureChest(result.getString("owner")), result.getInt("PermissionType"));
         }
-        statement = "SELECT * FROM securechestSetting WHERE securitylevel = ?";
+        statement = "SELECT DISTINCT owner FROM securechestSetting WHERE securitylevel = ?";
         PreparedStatement select2 = connection.prepareStatement(statement);
         select2.setString(1, "Public");
         ResultSet result2 = select2.executeQuery();
@@ -224,15 +225,16 @@ public class database_item7 {
     public static HashMap<String, Integer> retrieveAccessPermission(String owner) throws SQLException{
         Connection connection = getConnection();
         HashMap<String, Integer> access = new HashMap<String, Integer>();
-        String statement = "SELECT * FROM securechestsetting WHERE owner =?";
+        String statement = "SELECT * FROM securechestsetting WHERE owner =? AND securitylevel !=?";
         PreparedStatement select = connection.prepareStatement(statement);
         select.setString(1, owner);
+        select.setString(2, "Private");
         ResultSet result = select.executeQuery();
         String securitylevel= null;
         if (result.next()){
             securitylevel = result.getString("securitylevel");
             if (securitylevel.equals("Public")){
-                statement = "SELECT DISTINCT owner FROM securechestSetting  WHERE owner !=?";
+                statement = "SELECT DISTINCT owner FROM securechestSetting WHERE owner !=?";
                 PreparedStatement select1 = connection.prepareStatement(statement);
                 select1.setString(1, owner);
                 ResultSet result1 = select1.executeQuery();
@@ -279,11 +281,11 @@ public class database_item7 {
         update.setString(1, security);
         update.setString(2, owner);
         update.executeUpdate();
-        if (security.equals("Private")){
-            statement = "DELETE FROM securechestSetting WHERE owner != approvedUser";
-            PreparedStatement delete = connection.prepareStatement(statement);
-            delete.executeUpdate();
-        }
+        // if (security.equals("Private")){
+        //     statement = "DELETE FROM securechestSetting WHERE owner != approvedUser";
+        //     PreparedStatement delete = connection.prepareStatement(statement);
+        //     delete.executeUpdate();
+        // }
     }
 
     public static void updateChestPermission(String owner, String username, int type) throws SQLException{

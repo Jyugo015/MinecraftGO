@@ -378,9 +378,9 @@ public class database_item6 {
         select.setString(2, cropName);
         ResultSet result = select.executeQuery();
         if (result.next()){
-            statement = "UPDATE crop SET cropQuantity =? WHERE username =? AND cropName =?";
+            statement = "UPDATE crop SET Quantitycrop =? WHERE username =? AND cropName =?";
             PreparedStatement update = connection.prepareStatement(statement);
-            update.setInt(1, result.getInt("cropquantity")- quantityToRemove);
+            update.setInt(1, result.getInt("quantitycrop")- quantityToRemove);
             update.setString(2, username);
             update.setString(3, cropName);
             update.executeUpdate();

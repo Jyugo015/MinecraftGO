@@ -133,9 +133,10 @@ public class SecureChest {
      */
     public void editSecurityLevel(String level) throws SQLException {
         securityLevel = level;
+        database_item7.updateChestSecurity(owner, this.securityLevel);
+        accessPermissions = database_item7.retrieveAccessPermission(owner);
         if (level.equals("Private"))
             accessPermissions.clear();
-        database_item7.updateChestSecurity(owner, this.securityLevel);
     }
 
     // Method to grant access to a player: owner wants to add / remove someone to access this chest
@@ -267,10 +268,12 @@ public class SecureChest {
             database_item7.deposit(owner, username, item, quantity);
             //username can be either the owner or other user, depending on which page the user are in 
             // (My Chest -> username = owner, other Chest -> username = otherUser)
-            if (itemChest.keySet().contains(item)){
-                quantity+=itemChest.get(item);
-                itemChest.remove(item);
-                itemChest.put(item,quantity);
+            Optional<Map.Entry<EnderBackpackItem, Integer>> entry = itemChest.entrySet()
+                    .stream().filter(e->e.getKey().getName().equals(item.getName())).findFirst();
+            if (entry.isPresent()){
+                quantity+=itemChest.get(entry.get().getKey());
+                itemChest.remove(entry.get().getKey());
+                itemChest.put(entry.get().getKey(),quantity);
             }
             else
                 itemChest.put(item,quantity);
@@ -290,8 +293,13 @@ public class SecureChest {
     public void withdraw (String username, EnderBackpackItem item, int quantity) throws SQLException {
         // if (hasAccess(username)==2) {
             database_item7.withdraw(owner, username, item, quantity);
-            int oriquantity = itemChest.get(item);
-            itemChest.remove(item);
+            Optional<Map.Entry<EnderBackpackItem, Integer>> entry = itemChest.entrySet()
+                    .stream().filter(e->e.getKey().getName().equals(item.getName())).findFirst();
+            int oriquantity=0;
+            if (entry.isPresent()){
+                oriquantity = itemChest.get(entry.get().getKey());
+            }
+            itemChest.remove(entry.get().getKey());
             if (oriquantity-quantity !=0)
                 itemChest.put(item, oriquantity-quantity);
         //     return "Item successfully withdrawed.";

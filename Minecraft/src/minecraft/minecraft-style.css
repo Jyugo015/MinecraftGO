@@ -75,6 +75,18 @@
     /* -fx-border-color:#6c2929; */
 }
 
+.buttonpressed{
+    -fx-background-color: #6c2929;
+    -fx-text-fill: white;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0; /* No rounded corners */
+    -fx-border-color: transparent; /* No border */
+    -fx-border-width: 0;
+    -fx-padding: 5px 10px;
+    -fx-font-family: 'Unifont';
+    -fx-font-size: 14px;
+}
+
 /* listview */
 .list-view {
     -fx-padding: 0px; /* Padding inside the ListView */

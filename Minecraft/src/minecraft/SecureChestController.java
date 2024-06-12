@@ -399,7 +399,8 @@ public class SecureChestController implements Initializable{
     public void displayEditAuthorisedUser() throws SQLException {
         authorisedUser = chest.getAuthorizedPlayers();
         ObservableList<String> users = FXCollections.observableArrayList(authorisedUser);
-        authorisedUserList.setItems(users);
+        // if (!chest.getSecurityLevel().equals("Private"))
+            authorisedUserList.setItems(users);
         System.out.println("set the userlistView");
         editAuthorisedUserButton.setOnAction(e-> {
             try {
@@ -413,6 +414,7 @@ public class SecureChestController implements Initializable{
         authorisedUserList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             selectedUser = newValue;
             System.out.println(selectedUser);
+            
             if (selectedUser != null && chest.getSecurityLevel().equals("Self-defined")) {
                 System.out.println("got run");
                 editAuthorisedUserButton.setDisable(false);
@@ -644,8 +646,6 @@ public class SecureChestController implements Initializable{
 
                 Button viewOnly = new Button("View Only");
                 Button fullAccess = new Button("Full Access");
-                viewOnly.getStyleClass().add("button");
-                fullAccess.getStyleClass().add("button");
 
                 grid.add(viewOnly, 0,0);
                 grid.add(fullAccess, 1, 0);
@@ -669,17 +669,26 @@ public class SecureChestController implements Initializable{
                 // Create event handlers for the buttons
                 EventHandler<ActionEvent> viewOnlyHandler = event -> {
                     // Reset the style of the fullAccess button
-                    fullAccess.getStyleClass().add("button");;
+                    fullAccess.getStyleClass().clear();
+                    if (!fullAccess.getStyleClass().contains("button"))
+                    fullAccess.getStyleClass().add("button");
                     // Set the style of the viewOnly button
-                    viewOnly.setStyle("-fx-background-color: #6c2929;");
+                    viewOnly.getStyleClass().clear();
+                    if (!viewOnly.getStyleClass().contains("buttonpressed"))
+                    viewOnly.getStyleClass().add("buttonpressed");
                     selectedPermission = 1; // Set the selected permission
                 };
 
                 EventHandler<ActionEvent> fullAccessHandler = event -> {
                     // Reset the style of the viewOnly button
-                    viewOnly.getStyleClass().add("button");;
+                    viewOnly.getStyleClass().clear();
+                    //removeall method should have the style class specified
+                    if (!viewOnly.getStyleClass().contains("button"))
+                        viewOnly.getStyleClass().add("button");
                     // Set the style of the fullAccess button
-                    fullAccess.setStyle("-fx-background-color: #6c2929");
+                    fullAccess.getStyleClass().clear();
+                    if (!fullAccess.getStyleClass().contains("buttonpressed"))
+                        fullAccess.getStyleClass().add("buttonpressed");
                     selectedPermission = 2; // Set the selected permission
                 };
 

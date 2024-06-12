@@ -35,7 +35,7 @@ public class database_item5 {
 
     public static void initialize() throws SQLException {
         TeleportationNetworkController.Point n1 =  new TeleportationNetworkController.Point("A", "defaultUser", 50,60,null,null,null);
-        TeleportationNetworkController.Point n2 =  new TeleportationNetworkController.Point("B", "defaultUser1", 300, 300,null,null,null);
+        TeleportationNetworkController.Point n2 =  new TeleportationNetworkController.Point("B", "defaultUser4", 300, 300,null,null,null);
         TeleportationNetworkController.Point n3 =  new TeleportationNetworkController.Point("C", "defaultUser2", 400, 50,null,null,null);
         TeleportationNetworkController.Point n4 =  new TeleportationNetworkController.Point("D", "defaultUser3", 200, 100,null,null,null);
         TeleportationNetworkController.Point[] points = {n1,n2,n3,n4};
